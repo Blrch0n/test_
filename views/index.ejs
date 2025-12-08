@@ -4,163 +4,106 @@
   .hero {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 5rem 2rem;
+    padding: 4rem 2rem;
     text-align: center;
-    border-radius: 24px;
-    margin-bottom: 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -30%;
-    left: -5%;
-    width: 400px;
-    height: 400px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 50%;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 1;
+    border-radius: 8px;
+    margin-bottom: 2rem;
   }
 
   .hero h1 {
-    font-size: 3.5rem;
+    font-size: 3rem;
     margin-bottom: 1rem;
-    font-weight: 800;
-    letter-spacing: -1px;
   }
 
   .hero p {
-    font-size: 1.4rem;
-    margin-bottom: 2.5rem;
-    opacity: 0.95;
-    font-weight: 300;
-  }
-
-  .hero-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
-  .hero .btn {
-    font-size: 1.1rem;
-    padding: 1rem 2.5rem;
-    background: white;
-    color: #667eea;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  }
-
-  .hero .btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
-  }
-
-  .hero .btn-secondary {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    backdrop-filter: blur(10px);
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
   }
 
   .features {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
   }
 
   .feature-card {
     background: white;
-    padding: 2.5rem;
-    border-radius: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    transition: all 0.3s ease;
-    border: 1px solid #e2e8f0;
-  }
-
-  .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.06);
   }
 
   .feature-card h3 {
-    color: #2d3748;
+    color: #2c3e50;
     margin-bottom: 1rem;
     font-size: 1.5rem;
-    font-weight: 700;
-  }
-
-  .feature-card p {
-    color: #718096;
-    line-height: 1.8;
   }
 
   .feature-icon {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
-    filter: grayscale(0);
+    font-size: 3rem;
+    margin-bottom: 1rem;
   }
 </style>
 
 <div class="hero">
-  <div class="hero-content">
-    <h1>Welcome to Event Portal</h1>
-    <p>Discover, Create, and Manage Campus Events</p>
-    <div class="hero-buttons">
-      <% if (!user) { %>
-      <a href="/register" class="btn">Get Started</a>
-      <a href="/events" class="btn btn-secondary">Browse Events</a>
-      <% } else { %>
-      <a href="/events" class="btn">Browse Events</a>
-      <a href="/events/new" class="btn btn-secondary">Create Event</a>
-      <% } %>
-    </div>
-  </div>
+  <h1>Арга Хэмжээний Порталд Тавтай Морилно Уу</h1>
+  <p>Сургуулийн арга хэмжээнүүдийг олох, үүсгэх, удирдах</p>
+  <% if (!user) { %>
+  <a
+    href="/register"
+    class="btn btn-success"
+    style="font-size: 1.2rem; padding: 1rem 2rem"
+    >Эхлэх</a
+  >
+  <a
+    href="/events"
+    class="btn"
+    style="font-size: 1.2rem; padding: 1rem 2rem; margin-left: 1rem"
+    >Арга хэмжээ үзэх</a
+  >
+  <% } else { %>
+  <a
+    href="/events"
+    class="btn btn-success"
+    style="font-size: 1.2rem; padding: 1rem 2rem"
+    >Арга хэмжээ үзэх</a
+  >
+  <a
+    href="/events/new"
+    class="btn"
+    style="font-size: 1.2rem; padding: 1rem 2rem; margin-left: 1rem"
+    >Арга хэмжээ үүсгэх</a
+  >
+  <% } %>
 </div>
 
 <div class="features">
   <div class="feature-card">
     <div class="feature-icon">🔍</div>
-    <h3>Discover Events</h3>
+    <h3>Арга хэмжээ олох</h3>
     <p>
-      Browse and filter campus events by date, category, and host. Find events
-      that match your interests.
+      Огноо, төрөл, зохион байгуулагчаар шүүж, сургуулийн арга хэмжээнүүдийг үзнэ. 
+      Өөрт тохирсон арга хэмжээг олоорой.
     </p>
   </div>
 
   <div class="feature-card">
     <div class="feature-icon">✨</div>
-    <h3>Create Events</h3>
+    <h3>Арга хэмжээ зохион байгуулах</h3>
     <p>
-      Host your own events and reach the campus community. Manage registrations
-      and track attendance.
+      Өөрийн арга хэмжээг үүсгэж, сургуулийн хүмүүст хүргэнэ. 
+      Бүртгэлийг удирдаж, ирцийг хянана.
     </p>
   </div>
 
   <div class="feature-card">
     <div class="feature-icon">📊</div>
-    <h3>Host Dashboard</h3>
+    <h3>Зохион байгуулагчийн самбар</h3>
     <p>
-      View event statistics, registration counts, and participant lists all in
-      one place.
+      Арга хэмжээний статистик, бүртгэлийн тоо, оролцогчдын жагсаалтыг 
+      нэг дороос харна.
     </p>
   </div>
 </div>

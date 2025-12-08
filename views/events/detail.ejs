@@ -83,7 +83,7 @@
 
 <div class="event-detail">
   <a href="/events" class="btn btn-secondary" style="margin-bottom: 1rem"
-    >← Back to Events</a
+    >← Арга хэмжээнүүд рүү буцах</a
   >
 
   <div class="event-hero">
@@ -93,53 +93,53 @@
         ><%= event.category %></span
       >
       <span class="badge badge-info" style="font-size: 1rem"
-        >👥 <%= event.attendee_count %> Registered</span
+        >👥 <%= event.attendee_count %> бүртгүүлсэн</span
       >
     </div>
   </div>
 
   <div class="detail-section">
-    <h2>Event Details</h2>
+    <h2>Арга хэмжээний дэлгэрэнгүй</h2>
 
     <div class="detail-grid">
       <div class="detail-item">
-        <strong>📅 Start Date & Time</strong>
+        <strong>📅 Эхлэх огноо ба цаг</strong>
         <span><%= new Date(event.start_datetime).toLocaleString() %></span>
       </div>
 
       <% if (event.end_datetime) { %>
       <div class="detail-item">
-        <strong>🏁 End Date & Time</strong>
+        <strong>🏁 Дуусах огноо ба цаг</strong>
         <span><%= new Date(event.end_datetime).toLocaleString() %></span>
       </div>
       <% } %>
 
       <div class="detail-item">
-        <strong>📍 Location</strong>
+        <strong>📍 Байршил</strong>
         <span><%= event.location %></span>
       </div>
 
       <div class="detail-item">
-        <strong>👤 Host</strong>
+        <strong>👤 Зохион байгуулагч</strong>
         <span><%= event.host_name %></span>
       </div>
 
       <% if (event.max_attendees) { %>
       <div class="detail-item">
-        <strong>👥 Max Attendees</strong>
+        <strong>👥 Хамгийн их оролцогч</strong>
         <span><%= event.max_attendees %></span>
       </div>
       <% } %>
 
       <div class="detail-item">
-        <strong>📊 Current Registrations</strong>
+        <strong>📊 Одоогийн бүртгэл</strong>
         <span><%= event.attendee_count %></span>
       </div>
     </div>
 
     <% if (event.description) { %>
     <div class="detail-item">
-      <strong>📝 Description</strong>
+      <strong>📝 Тайлбар</strong>
       <p style="margin-top: 0.5rem; line-height: 1.6">
         <%= event.description %>
       </p>
@@ -148,35 +148,35 @@
   </div>
 
   <div class="detail-section">
-    <h2>Registration</h2>
+    <h2>Бүртгэл</h2>
 
     <% if (user) { %> <% if (isRegistered) { %>
-    <div class="registration-status">✅ You are registered for this event!</div>
+    <div class="registration-status">✅ Та энэ арга хэмжээнд бүртгүүлсэн байна!</div>
     <form method="POST" action="/events/<%= event.id %>/unregister">
-      <button type="submit" class="btn btn-danger">Unregister</button>
+      <button type="submit" class="btn btn-danger">Бүртгэл цуцлах</button>
     </form>
     <% } else { %> <% if (event.max_attendees && event.attendee_count >=
     event.max_attendees) { %>
-    <div class="alert alert-error">⚠️ This event is at full capacity.</div>
+    <div class="alert alert-error">⚠️ Энэ арга хэмжээ дүүрсэн байна.</div>
     <% } else { %>
-    <p>Interested in this event? Register now!</p>
+    <p>Энэ арга хэмжээ сонирхож байна уу? Одоо бүртгүүлээрэй!</p>
     <form method="POST" action="/events/<%= event.id %>/register">
-      <button type="submit" class="btn btn-success">Register for Event</button>
+      <button type="submit" class="btn btn-success">Бүртгүүлэх</button>
     </form>
     <% } %> <% } %> <% } else { %>
     <div class="alert alert-error">
-      Please <a href="/login">login</a> to register for this event.
+      Бүртгүүлэхийн тулд <a href="/login">нэвтэрнэ</a> үү.
     </div>
     <% } %>
   </div>
 
   <% if (user && event.host_id === user.id) { %>
   <div class="detail-section">
-    <h2>Host Actions</h2>
+    <h2>Зохион байгуулагчийн үйлдлүүд</h2>
     <div class="action-buttons">
-      <a href="/events/<%= event.id %>/edit" class="btn">Edit Event</a>
+      <a href="/events/<%= event.id %>/edit" class="btn">Арга хэмжээ засах</a>
       <a href="/host/events/<%= event.id %>/participants" class="btn"
-        >View Participants</a
+        >Оролцогчдыг үзэх</a
       >
       <form
         method="POST"
@@ -186,9 +186,9 @@
         <button
           type="submit"
           class="btn btn-danger"
-          onclick="return confirm('Are you sure you want to delete this event?')"
+          onclick="return confirm('Та энэ арга хэмжээг устгахдаа итгэлтэй байна уу?')"
         >
-          Delete Event
+          Арга хэмжээ устгах
         </button>
       </form>
     </div>

@@ -5,96 +5,76 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .page-header h2 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #2d3748;
+    margin-bottom: 2rem;
   }
 
   .filter-form {
     background: white;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    margin-bottom: 2.5rem;
-    border: 1px solid #e2e8f0;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
   }
 
   .filter-form h3 {
-    margin-bottom: 1.5rem;
-    color: #2d3748;
-    font-weight: 700;
-    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
   }
 
   .filter-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.2rem;
-    margin-bottom: 1.2rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
   }
 
   .filter-grid input,
   .filter-grid select {
     width: 100%;
-    padding: 0.9rem 1rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 10px;
-    transition: all 0.2s ease;
-  }
-
-  .filter-grid input:focus,
-  .filter-grid select:focus {
-    outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
 
   .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
   }
 
   .event-card {
     background: white;
-    border-radius: 16px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     overflow: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid #e2e8f0;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
 
   .event-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
   }
 
   .event-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 1.8rem;
+    padding: 1.5rem;
   }
 
   .event-header h3 {
-    margin-bottom: 0.6rem;
-    font-size: 1.4rem;
-    font-weight: 700;
+    margin-bottom: 0.5rem;
   }
 
   .event-body {
-    padding: 1.8rem;
+    padding: 1.5rem;
   }
 
   .event-meta {
     display: flex;
     flex-direction: column;
-    gap: 0.7rem;
-    margin-bottom: 1.2rem;
-    color: #4a5568;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #555;
   }
 
   .event-meta-item {
@@ -124,36 +104,36 @@
 </style>
 
 <div class="page-header">
-  <h1>Browse Events</h1>
-  <a href="/events/new" class="btn btn-success">+ Create Event</a>
+  <h1>Арга хэмжээнүүд</h1>
+  <a href="/events/new" class="btn btn-success">+ Арга хэмжээ үүсгэх</a>
 </div>
 
 <div class="filter-form">
-  <h3>🔍 Filter Events</h3>
+  <h3>🔍 Арга хэмжээ шүүх</h3>
   <form method="GET" action="/events">
     <div class="filter-grid">
       <div>
-        <label>Date</label>
+        <label>Огноо</label>
         <input type="date" name="date" value="<%= filters.date || '' %>">
       </div>
       <div>
-        <label>Category</label>
+        <label>Төрөл</label>
         <select name="category">
-          <option value="">All Categories</option>
-          <option value="Academic" <%= filters.category === 'Academic' ? 'selected' : '' %>>Academic</option>
-          <option value="Social" <%= filters.category === 'Social' ? 'selected' : '' %>>Social</option>
-          <option value="Sports" <%= filters.category === 'Sports' ? 'selected' : '' %>>Sports</option>
-          <option value="Club" <%= filters.category === 'Club' ? 'selected' : '' %>>Club</option>
-          <option value="Workshop" <%= filters.category === 'Workshop' ? 'selected' : '' %>>Workshop</option>
-          <option value="Other" <%= filters.category === 'Other' ? 'selected' : '' %>>Other</option>
+          <option value="">Бүх төрөл</option>
+          <option value="Academic" <%= filters.category === 'Academic' ? 'selected' : '' %>>Сургалт</option>
+          <option value="Social" <%= filters.category === 'Social' ? 'selected' : '' %>>Нийгмийн</option>
+          <option value="Sports" <%= filters.category === 'Sports' ? 'selected' : '' %>>Спорт</option>
+          <option value="Club" <%= filters.category === 'Club' ? 'selected' : '' %>>Клуб</option>
+          <option value="Workshop" <%= filters.category === 'Workshop' ? 'selected' : '' %>>Семинар</option>
+          <option value="Other" <%= filters.category === 'Other' ? 'selected' : '' %>>Бусад</option>
         </select>
       </div>
       <div>
-        <label>Host Name</label>
-        <input type="text" name="host" placeholder="Search by host..." value="<%= filters.host || '' %>">
+        <label>Зохион байгуулагч</label>
+        <input type="text" name="host" placeholder="Зохион байгуулагчаар хайх..." value="<%= filters.host || '' %>">
       </div>
       <div style="display: flex; align-items: flex-end;">
-        <button type="submit" class="btn" style="width: 100%;">Apply Filters</button>
+        <button type="submit" class="btn" style="width: 100%;">Шүүх</button>
       </div>
     </div>
   </form>
@@ -161,8 +141,8 @@
 
 <% if (events.length === 0) { %>
   <div class="no-events">
-    <h3>No events found</h3>
-    <p>Try adjusting your filters or <a href="/events/new">create a new event</a>!</p>
+    <h3>Арга хэмжээ олдсонгүй</h3>
+    <p>Шүүлтүүрээ өөрчлөн оролдоорой эсвэл <a href="/events/new">шинэ арга хэмжээ үүсгэх</a>!</p>
   </div>
 <% } else { %>
   <div class="events-grid">
@@ -176,7 +156,7 @@
           <div class="event-meta">
             <div class="event-meta-item">
               <strong>📅</strong>
-              <span><%= new Date(event.start_datetime).toLocaleDateString() %> at <%= new Date(event.start_datetime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></span>
+              <span><%= new Date(event.start_datetime).toLocaleDateString() %> <%= new Date(event.start_datetime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></span>
             </div>
             <div class="event-meta-item">
               <strong>📍</strong>
@@ -184,17 +164,17 @@
             </div>
             <div class="event-meta-item">
               <strong>👤</strong>
-              <span>Host: <%= event.host_name %></span>
+              <span>Зохион байгуулагч: <%= event.host_name %></span>
             </div>
             <div class="event-meta-item">
               <strong>👥</strong>
-              <span><%= event.attendee_count %> registered</span>
+              <span><%= event.attendee_count %> бүртгүүлсэн</span>
             </div>
           </div>
-          <p><%= event.description ? (event.description.substring(0, 100) + (event.description.length > 100 ? '...' : '')) : 'No description' %></p>
+          <p><%= event.description ? (event.description.substring(0, 100) + (event.description.length > 100 ? '...' : '')) : 'Тайлбар байхгүй' %></p>
         </div>
         <div class="event-footer">
-          <a href="/events/<%= event.id %>" class="btn">View Details</a>
+          <a href="/events/<%= event.id %>" class="btn">Дэлгэрэнгүй</a>
         </div>
       </div>
     <% }); %>

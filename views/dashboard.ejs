@@ -42,53 +42,53 @@
 </style>
 
 <div class="dashboard-header">
-  <h1>Welcome back, <%= user.name %>!</h1>
+  <h1>Сайн байна уу, <%= user.name %>!</h1>
   <p>
-    Role: <strong><%= user.role.toUpperCase() %></strong> | Email: <%=
+    Эрх: <strong><%= user.role.toUpperCase() %></strong> | Имэйл: <%=
     user.email %>
   </p>
 </div>
 
-<h2>Quick Actions</h2>
+<h2>Шуурхай үйлдлүүд</h2>
 
 <div class="quick-actions">
   <div class="action-card">
     <div class="action-icon">🔍</div>
-    <h3>Browse Events</h3>
-    <p>Discover new events happening on campus</p>
-    <a href="/events" class="btn" style="margin-top: 1rem">Browse</a>
+    <h3>Арга хэмжээ үзэх</h3>
+    <p>Сургуульд болох шинэ арга хэмжээнүүдийг олоорой</p>
+    <a href="/events" class="btn" style="margin-top: 1rem">Үзэх</a>
   </div>
 
   <div class="action-card">
     <div class="action-icon">✨</div>
-    <h3>Create Event</h3>
-    <p>Host a new event and invite attendees</p>
+    <h3>Арга хэмжээ үүсгэх</h3>
+    <p>Шинэ арга хэмжээ зохион байгуулж оролцогчид урих</p>
     <a href="/events/new" class="btn btn-success" style="margin-top: 1rem"
-      >Create</a
+      >Үүсгэх</a
     >
   </div>
 
   <div class="action-card">
     <div class="action-icon">📋</div>
-    <h3>My Events</h3>
-    <p>Manage your created events</p>
-    <a href="/events/my/list" class="btn" style="margin-top: 1rem">View</a>
+    <h3>Миний арга хэмжээнүүд</h3>
+    <p>Өөрийн үүсгэсэн арга хэмжээнүүдээ удирдах</p>
+    <a href="/events/my/list" class="btn" style="margin-top: 1rem">Үзэх</a>
   </div>
 
   <div class="action-card">
     <div class="action-icon">📊</div>
-    <h3>Host Dashboard</h3>
-    <p>View event statistics and participants</p>
-    <a href="/host/dashboard" class="btn" style="margin-top: 1rem">Dashboard</a>
+    <h3>Зохион байгуулагчийн самбар</h3>
+    <p>Арга хэмжээний статистик болон оролцогчдыг харах</p>
+    <a href="/host/dashboard" class="btn" style="margin-top: 1rem">Самбар</a>
   </div>
 
   <% if (user.role === 'admin') { %>
   <div class="action-card">
     <div class="action-icon">🛡️</div>
-    <h3>Admin Panel</h3>
-    <p>Manage all events and users</p>
+    <h3>Админ самбар</h3>
+    <p>Бүх арга хэмжээ болон хэрэглэгчдийг удирдах</p>
     <a href="/admin/events" class="btn btn-danger" style="margin-top: 1rem"
-      >Admin</a
+      >Админ</a
     >
   </div>
   <% } %>
