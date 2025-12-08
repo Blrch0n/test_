@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcryptjs");
@@ -14,11 +15,13 @@ app.use(express.static("public"));
 
 app.use(
   session({
-    secret: "event-portal-secret-key-change-in-production",
+    secret: process.env.SESSION_SECRET || "event-portal-secret-key-change-in-production",
     resave: false,
     saveUninitialized: false,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
     },
   })
 );
