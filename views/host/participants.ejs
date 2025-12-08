@@ -1,0 +1,144 @@
+<%- include('../partials/header-layout') %>
+
+<style>
+  .event-info {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .event-info h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .participants-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: #2c3e50;
+    color: white;
+  }
+
+  th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+  }
+
+  tbody tr:hover {
+    background: #f8f9fa;
+  }
+
+  .no-participants {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 8px;
+  }
+
+  .no-participants h3 {
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+  }
+
+  .export-btn {
+    margin-bottom: 1rem;
+  }
+</style>
+
+<a href="/host/dashboard" class="btn btn-secondary" style="margin-bottom: 1rem;">← Back to Host Dashboard</a>
+
+<div class="event-info">
+  <h1><%= event.title %></h1>
+  <p>📅 <%= new Date(event.start_datetime).toLocaleString() %> | 📍 <%= event.location %></p>
+  <p style="margin-top: 1rem;"><strong>Total Participants: <%= participants.length %></strong></p>
+</div>
+
+<h2>Registered Participants</h2>
+
+<% if (participants.length === 0) { %>
+  <div class="no-participants">
+    <h3>No participants yet</h3>
+    <p>When people register for your event, they'll appear here.</p>
+  </div>
+<% } else { %>
+  <div class="participants-table">
+    <table id="participantsTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Registered At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% participants.forEach((participant, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><strong><%= participant.name %></strong></td>
+            <td><%= participant.email %></td>
+            <td><%= new Date(participant.registered_at).toLocaleString() %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="margin-top: 1.5rem;">
+    <button onclick="exportToCSV()" class="btn btn-success">📥 Export to CSV</button>
+  </div>
+
+  <script>
+    function exportToCSV() {
+      const table = document.getElementById('participantsTable');
+      let csv = [];
+      
+      // Get headers
+      const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent);
+      csv.push(headers.join(','));
+      
+      // Get data
+      const rows = table.querySelectorAll('tbody tr');
+      rows.forEach(row => {
+        const cols = Array.from(row.querySelectorAll('td')).map(td => {
+          // Escape quotes and wrap in quotes if contains comma
+          let text = td.textContent.trim();
+          if (text.includes(',') || text.includes('"')) {
+            text = '"' + text.replace(/"/g, '""') + '"';
+          }
+          return text;
+        });
+        csv.push(cols.join(','));
+      });
+      
+      // Download
+      const csvContent = csv.join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '<%= event.title.replace(/[^a-z0-9]/gi, '_') %>_participants.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+  </script>
+<% } %>
+
+<%- include('../partials/footer-layout') %>

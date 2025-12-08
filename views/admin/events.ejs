@@ -1,0 +1,99 @@
+<%- include('../partials/header-layout') %>
+
+<style>
+  .admin-header {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .events-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: #2c3e50;
+    color: white;
+  }
+
+  th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+  }
+
+  tbody tr:hover {
+    background: #f8f9fa;
+  }
+
+  .event-actions .btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+  }
+</style>
+
+<div class="admin-header">
+  <h1>🛡️ Admin Panel</h1>
+  <p>Manage all events across the platform</p>
+</div>
+
+<h2 style="margin-bottom: 1rem;">All Events</h2>
+
+<% if (events.length === 0) { %>
+  <div class="card">
+    <p>No events in the system.</p>
+  </div>
+<% } else { %>
+  <div class="events-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Host</th>
+          <th>Category</th>
+          <th>Date</th>
+          <th>Registrations</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% events.forEach(event => { %>
+          <tr>
+            <td>#<%= event.id %></td>
+            <td><strong><%= event.title %></strong></td>
+            <td><%= event.host_name %></td>
+            <td><span class="badge badge-warning"><%= event.category %></span></td>
+            <td><%= new Date(event.start_datetime).toLocaleDateString() %></td>
+            <td><span class="badge badge-info">👥 <%= event.attendee_count %></span></td>
+            <td>
+              <div class="event-actions">
+                <a href="/events/<%= event.id %>" class="btn">View</a>
+                <form method="POST" action="/admin/events/<%= event.id %>/delete" style="display: inline;">
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this event? This will also delete all registrations.')">Delete</button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('../partials/footer-layout') %>

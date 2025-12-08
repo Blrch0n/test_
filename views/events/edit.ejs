@@ -1,0 +1,137 @@
+<%- include('../partials/header-layout') %>
+
+<style>
+  .form-container {
+    max-width: 700px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  .form-container h2 {
+    color: #2c3e50;
+    margin-bottom: 2rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+
+  .form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .help-text {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+    margin-top: 0.3rem;
+  }
+</style>
+
+<div class="form-container">
+  <a href="/events/my/list" class="btn btn-secondary" style="margin-bottom: 1rem;">← Back to My Events</a>
+  
+  <h2>Edit Event</h2>
+
+  <form method="POST" action="/events/<%= event.id %>/edit">
+    <div class="form-group">
+      <label for="title">Event Title *</label>
+      <input type="text" id="title" name="title" value="<%= event.title %>" required maxlength="150">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" placeholder="Tell people about your event..."><%= event.description || '' %></textarea>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="category">Category *</label>
+        <select id="category" name="category" required>
+          <option value="">Select category...</option>
+          <option value="Academic" <%= event.category === 'Academic' ? 'selected' : '' %>>Academic</option>
+          <option value="Social" <%= event.category === 'Social' ? 'selected' : '' %>>Social</option>
+          <option value="Sports" <%= event.category === 'Sports' ? 'selected' : '' %>>Sports</option>
+          <option value="Club" <%= event.category === 'Club' ? 'selected' : '' %>>Club</option>
+          <option value="Workshop" <%= event.category === 'Workshop' ? 'selected' : '' %>>Workshop</option>
+          <option value="Other" <%= event.category === 'Other' ? 'selected' : '' %>>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="location">Location *</label>
+        <input type="text" id="location" name="location" value="<%= event.location %>" required maxlength="100">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="start_datetime">Start Date & Time *</label>
+        <input type="datetime-local" id="start_datetime" name="start_datetime" 
+               value="<%= new Date(event.start_datetime).toISOString().slice(0, 16) %>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="end_datetime">End Date & Time</label>
+        <input type="datetime-local" id="end_datetime" name="end_datetime" 
+               value="<%= event.end_datetime ? new Date(event.end_datetime).toISOString().slice(0, 16) : '' %>">
+        <p class="help-text">Optional</p>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="max_attendees">Maximum Attendees</label>
+      <input type="number" id="max_attendees" name="max_attendees" min="1" 
+             value="<%= event.max_attendees || '' %>" placeholder="Leave blank for unlimited">
+      <p class="help-text">Optional - set a cap on registrations</p>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-success">Save Changes</button>
+      <a href="/events/my/list" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<%- include('../partials/footer-layout') %>

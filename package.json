@@ -1,0 +1,25 @@
+{
+  "name": "event-portal",
+  "version": "1.0.0",
+  "description": "Campus Event Portal - Discover, Create, and Manage Campus Events",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["event", "campus", "portal", "events"],
+  "author": "Team 6 - PM: Ulsbold, Backend: Amarjargal, Frontend: Khosbayar",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "mysql2": "^3.15.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

@@ -1,0 +1,146 @@
+<%- include('../partials/header-layout') %>
+
+<style>
+  .dashboard-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #3498db;
+    margin: 0.5rem 0;
+  }
+
+  .stat-label {
+    color: #7f8c8d;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+
+  .events-table {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: #2c3e50;
+    color: white;
+  }
+
+  th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  td {
+    padding: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+  }
+
+  tbody tr:hover {
+    background: #f8f9fa;
+  }
+
+  .no-events {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 8px;
+  }
+</style>
+
+<div class="dashboard-header">
+  <h1>📊 Host Dashboard</h1>
+  <p>Manage your events and track registrations</p>
+</div>
+
+<% 
+  const totalEvents = events.length;
+  const totalRegistrations = events.reduce((sum, e) => sum + parseInt(e.registrations), 0);
+  const avgRegistrations = totalEvents > 0 ? (totalRegistrations / totalEvents).toFixed(1) : 0;
+%>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-label">Total Events</div>
+    <div class="stat-number"><%= totalEvents %></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Total Registrations</div>
+    <div class="stat-number"><%= totalRegistrations %></div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-label">Avg Registrations/Event</div>
+    <div class="stat-number"><%= avgRegistrations %></div>
+  </div>
+</div>
+
+<h2 style="margin-bottom: 1rem;">Your Events</h2>
+
+<% if (events.length === 0) { %>
+  <div class="no-events">
+    <h3>You haven't created any events yet</h3>
+    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem;">Create Your First Event</a>
+  </div>
+<% } else { %>
+  <div class="events-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Event Title</th>
+          <th>Date & Time</th>
+          <th>Location</th>
+          <th>Registrations</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% events.forEach(event => { %>
+          <tr>
+            <td><strong><%= event.title %></strong></td>
+            <td>📅 <%= new Date(event.start_datetime).toLocaleString() %></td>
+            <td>📍 <%= event.location %></td>
+            <td>
+              <span class="badge badge-info" style="font-size: 1rem;">
+                👥 <%= event.registrations %>
+              </span>
+            </td>
+            <td>
+              <a href="/host/events/<%= event.id %>/participants" class="btn btn-success">View Participants</a>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+<% } %>
+
+<%- include('../partials/footer-layout') %>

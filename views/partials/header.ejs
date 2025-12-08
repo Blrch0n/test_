@@ -1,0 +1,26 @@
+<header>
+  <nav>
+    <h1><a href="/">🎉 Event Portal</a></h1>
+    <ul>
+      <li><a href="/events">Browse Events</a></li>
+      <% if (user) { %>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/events/new">Create Event</a></li>
+        <li><a href="/events/my/list">My Events</a></li>
+        <li><a href="/host/dashboard">Host Panel</a></li>
+        <% if (user.role === 'admin') { %>
+          <li><a href="/admin/events">Admin</a></li>
+        <% } %>
+      <% } %>
+    </ul>
+    <div class="user-info">
+      <% if (user) { %>
+        <span>Welcome, <strong><%= user.name %></strong> (<%= user.role %>)</span>
+        <a href="/logout" class="btn btn-secondary" style="padding: 0.4rem 1rem;">Logout</a>
+      <% } else { %>
+        <a href="/login" class="btn" style="padding: 0.4rem 1rem;">Login</a>
+        <a href="/register" class="btn btn-success" style="padding: 0.4rem 1rem;">Register</a>
+      <% } %>
+    </div>
+  </nav>
+</header>

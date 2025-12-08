@@ -1,0 +1,186 @@
+<%- include('../partials/header-layout') %>
+
+<style>
+  .event-detail {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .event-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .event-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .event-badges {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .detail-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-section h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .detail-item strong {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .detail-item span {
+    color: #2c3e50;
+    font-size: 1.1rem;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .registration-status {
+    background: #d4edda;
+    color: #155724;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-weight: 500;
+  }
+</style>
+
+<div class="event-detail">
+  <a href="/events" class="btn btn-secondary" style="margin-bottom: 1rem;">← Back to Events</a>
+
+  <div class="event-hero">
+    <h1><%= event.title %></h1>
+    <div class="event-badges">
+      <span class="badge badge-warning" style="font-size: 1rem;"><%= event.category %></span>
+      <span class="badge badge-info" style="font-size: 1rem;">👥 <%= event.attendee_count %> Registered</span>
+    </div>
+  </div>
+
+  <div class="detail-section">
+    <h2>Event Details</h2>
+    
+    <div class="detail-grid">
+      <div class="detail-item">
+        <strong>📅 Start Date & Time</strong>
+        <span><%= new Date(event.start_datetime).toLocaleString() %></span>
+      </div>
+
+      <% if (event.end_datetime) { %>
+      <div class="detail-item">
+        <strong>🏁 End Date & Time</strong>
+        <span><%= new Date(event.end_datetime).toLocaleString() %></span>
+      </div>
+      <% } %>
+
+      <div class="detail-item">
+        <strong>📍 Location</strong>
+        <span><%= event.location %></span>
+      </div>
+
+      <div class="detail-item">
+        <strong>👤 Host</strong>
+        <span><%= event.host_name %></span>
+      </div>
+
+      <% if (event.max_attendees) { %>
+      <div class="detail-item">
+        <strong>👥 Max Attendees</strong>
+        <span><%= event.max_attendees %></span>
+      </div>
+      <% } %>
+
+      <div class="detail-item">
+        <strong>📊 Current Registrations</strong>
+        <span><%= event.attendee_count %></span>
+      </div>
+    </div>
+
+    <% if (event.description) { %>
+    <div class="detail-item">
+      <strong>📝 Description</strong>
+      <p style="margin-top: 0.5rem; line-height: 1.6;"><%= event.description %></p>
+    </div>
+    <% } %>
+  </div>
+
+  <div class="detail-section">
+    <h2>Registration</h2>
+    
+    <% if (user) { %>
+      <% if (isRegistered) { %>
+        <div class="registration-status">
+          ✅ You are registered for this event!
+        </div>
+        <form method="POST" action="/events/<%= event.id %>/unregister">
+          <button type="submit" class="btn btn-danger">Unregister</button>
+        </form>
+      <% } else { %>
+        <% if (event.max_attendees && event.attendee_count >= event.max_attendees) { %>
+          <div class="alert alert-error">
+            ⚠️ This event is at full capacity.
+          </div>
+        <% } else { %>
+          <p>Interested in this event? Register now!</p>
+          <form method="POST" action="/events/<%= event.id %>/register">
+            <button type="submit" class="btn btn-success">Register for Event</button>
+          </form>
+        <% } %>
+      <% } %>
+    <% } else { %>
+      <div class="alert alert-error">
+        Please <a href="/login">login</a> to register for this event.
+      </div>
+    <% } %>
+  </div>
+
+  <% if (user && event.host_id === user.id) { %>
+  <div class="detail-section">
+    <h2>Host Actions</h2>
+    <div class="action-buttons">
+      <a href="/events/<%= event.id %>/edit" class="btn">Edit Event</a>
+      <a href="/host/events/<%= event.id %>/participants" class="btn">View Participants</a>
+      <form method="POST" action="/events/<%= event.id %>/delete" style="display: inline;">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this event?')">Delete Event</button>
+      </form>
+    </div>
+  </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer-layout') %>

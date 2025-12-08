@@ -1,0 +1,184 @@
+<%- include('../partials/header-layout') %>
+
+<style>
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  .filter-form {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+  }
+
+  .filter-form h3 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+  }
+
+  .filter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .filter-grid input,
+  .filter-grid select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .event-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .event-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  }
+
+  .event-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+  }
+
+  .event-header h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .event-body {
+    padding: 1.5rem;
+  }
+
+  .event-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: #555;
+  }
+
+  .event-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .event-footer {
+    padding: 0 1.5rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .no-events {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 8px;
+  }
+
+  .no-events h3 {
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<div class="page-header">
+  <h1>Browse Events</h1>
+  <a href="/events/new" class="btn btn-success">+ Create Event</a>
+</div>
+
+<div class="filter-form">
+  <h3>🔍 Filter Events</h3>
+  <form method="GET" action="/events">
+    <div class="filter-grid">
+      <div>
+        <label>Date</label>
+        <input type="date" name="date" value="<%= filters.date || '' %>">
+      </div>
+      <div>
+        <label>Category</label>
+        <select name="category">
+          <option value="">All Categories</option>
+          <option value="Academic" <%= filters.category === 'Academic' ? 'selected' : '' %>>Academic</option>
+          <option value="Social" <%= filters.category === 'Social' ? 'selected' : '' %>>Social</option>
+          <option value="Sports" <%= filters.category === 'Sports' ? 'selected' : '' %>>Sports</option>
+          <option value="Club" <%= filters.category === 'Club' ? 'selected' : '' %>>Club</option>
+          <option value="Workshop" <%= filters.category === 'Workshop' ? 'selected' : '' %>>Workshop</option>
+          <option value="Other" <%= filters.category === 'Other' ? 'selected' : '' %>>Other</option>
+        </select>
+      </div>
+      <div>
+        <label>Host Name</label>
+        <input type="text" name="host" placeholder="Search by host..." value="<%= filters.host || '' %>">
+      </div>
+      <div style="display: flex; align-items: flex-end;">
+        <button type="submit" class="btn" style="width: 100%;">Apply Filters</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<% if (events.length === 0) { %>
+  <div class="no-events">
+    <h3>No events found</h3>
+    <p>Try adjusting your filters or <a href="/events/new">create a new event</a>!</p>
+  </div>
+<% } else { %>
+  <div class="events-grid">
+    <% events.forEach(event => { %>
+      <div class="event-card">
+        <div class="event-header">
+          <h3><%= event.title %></h3>
+          <span class="badge badge-warning"><%= event.category %></span>
+        </div>
+        <div class="event-body">
+          <div class="event-meta">
+            <div class="event-meta-item">
+              <strong>📅</strong>
+              <span><%= new Date(event.start_datetime).toLocaleDateString() %> at <%= new Date(event.start_datetime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) %></span>
+            </div>
+            <div class="event-meta-item">
+              <strong>📍</strong>
+              <span><%= event.location %></span>
+            </div>
+            <div class="event-meta-item">
+              <strong>👤</strong>
+              <span>Host: <%= event.host_name %></span>
+            </div>
+            <div class="event-meta-item">
+              <strong>👥</strong>
+              <span><%= event.attendee_count %> registered</span>
+            </div>
+          </div>
+          <p><%= event.description ? (event.description.substring(0, 100) + (event.description.length > 100 ? '...' : '')) : 'No description' %></p>
+        </div>
+        <div class="event-footer">
+          <a href="/events/<%= event.id %>" class="btn">View Details</a>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+<% } %>
+
+<%- include('../partials/footer-layout') %>
