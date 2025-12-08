@@ -1,4 +1,6 @@
 require("dotenv").config();
+const path = require("path");
+const fs = require("fs");
 const express = require("express");
 const session = require("express-session");
 const bcrypt = require("bcryptjs");
@@ -7,11 +9,22 @@ const db = require("./db");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Fix views path for Vercel deployment
+const viewsPath = path.join(__dirname, "views");
+app.set("views", viewsPath);
 app.set("view engine", "ejs");
+
+// Debug log for Vercel
+console.log("Views directory resolved to:", viewsPath);
+try {
+  console.log("Views directory contents:", fs.readdirSync(viewsPath));
+} catch (err) {
+  console.error("Error reading views directory:", err);
+}
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
   session({
@@ -509,6 +522,12 @@ app.post("/admin/events/:id/delete", isAdmin, async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Only start server if not imported as module (for local development)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+// Export for Vercel
+module.exports = app;
