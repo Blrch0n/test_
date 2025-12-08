@@ -20,14 +20,14 @@
     background: white;
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
     transition: transform 0.3s, box-shadow 0.3s;
   }
 
   .action-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
 
   .action-card h3 {
@@ -43,7 +43,10 @@
 
 <div class="dashboard-header">
   <h1>Welcome back, <%= user.name %>!</h1>
-  <p>Role: <strong><%= user.role.toUpperCase() %></strong> | Email: <%= user.email %></p>
+  <p>
+    Role: <strong><%= user.role.toUpperCase() %></strong> | Email: <%=
+    user.email %>
+  </p>
 </div>
 
 <h2>Quick Actions</h2>
@@ -53,28 +56,30 @@
     <div class="action-icon">🔍</div>
     <h3>Browse Events</h3>
     <p>Discover new events happening on campus</p>
-    <a href="/events" class="btn" style="margin-top: 1rem;">Browse</a>
+    <a href="/events" class="btn" style="margin-top: 1rem">Browse</a>
   </div>
 
   <div class="action-card">
     <div class="action-icon">✨</div>
     <h3>Create Event</h3>
     <p>Host a new event and invite attendees</p>
-    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem;">Create</a>
+    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem"
+      >Create</a
+    >
   </div>
 
   <div class="action-card">
     <div class="action-icon">📋</div>
     <h3>My Events</h3>
     <p>Manage your created events</p>
-    <a href="/events/my/list" class="btn" style="margin-top: 1rem;">View</a>
+    <a href="/events/my/list" class="btn" style="margin-top: 1rem">View</a>
   </div>
 
   <div class="action-card">
     <div class="action-icon">📊</div>
     <h3>Host Dashboard</h3>
     <p>View event statistics and participants</p>
-    <a href="/host/dashboard" class="btn" style="margin-top: 1rem;">Dashboard</a>
+    <a href="/host/dashboard" class="btn" style="margin-top: 1rem">Dashboard</a>
   </div>
 
   <% if (user.role === 'admin') { %>
@@ -82,7 +87,9 @@
     <div class="action-icon">🛡️</div>
     <h3>Admin Panel</h3>
     <p>Manage all events and users</p>
-    <a href="/admin/events" class="btn btn-danger" style="margin-top: 1rem;">Admin</a>
+    <a href="/admin/events" class="btn btn-danger" style="margin-top: 1rem"
+      >Admin</a
+    >
   </div>
   <% } %>
 </div>

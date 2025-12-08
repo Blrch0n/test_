@@ -8,7 +8,12 @@
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["event", "campus", "portal", "events"],
+  "keywords": [
+    "event",
+    "campus",
+    "portal",
+    "events"
+  ],
   "author": "Team 6 - PM: Ulsbold, Backend: Amarjargal, Frontend: Khosbayar",
   "license": "ISC",
   "dependencies": {

@@ -2,43 +2,48 @@
 
 <style>
   .form-container {
-    max-width: 700px;
-    margin: 2rem auto;
+    max-width: 720px;
+    margin: 3rem auto;
     background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 3rem 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e2e8f0;
   }
 
   .form-container h2 {
-    color: #2c3e50;
-    margin-bottom: 2rem;
+    color: #2d3748;
+    margin-bottom: 2.5rem;
+    font-size: 2rem;
+    font-weight: 700;
   }
 
   .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
   }
 
   .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    color: #2c3e50;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: #4a5568;
+    font-size: 0.9rem;
   }
 
   .form-group input,
   .form-group select,
   .form-group textarea {
     width: 100%;
-    padding: 0.8rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 0.9rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
     font-size: 1rem;
     font-family: inherit;
+    transition: all 0.2s ease;
   }
 
   .form-group textarea {
-    min-height: 120px;
+    min-height: 140px;
     resize: vertical;
   }
 
@@ -46,8 +51,8 @@
   .form-group select:focus,
   .form-group textarea:focus {
     outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
   }
 
   .form-row {
@@ -70,19 +75,28 @@
 </style>
 
 <div class="form-container">
-  <a href="/events/my/list" class="btn btn-secondary" style="margin-bottom: 1rem;">← Back to My Events</a>
-  
+  <a
+    href="/events/my/list"
+    class="btn btn-secondary"
+    style="margin-bottom: 1rem"
+    >← Back to My Events</a
+  >
+
   <h2>Create New Event</h2>
 
   <form method="POST" action="/events">
     <div class="form-group">
       <label for="title">Event Title *</label>
-      <input type="text" id="title" name="title" required maxlength="150">
+      <input type="text" id="title" name="title" required maxlength="150" />
     </div>
 
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea id="description" name="description" placeholder="Tell people about your event..."></textarea>
+      <textarea
+        id="description"
+        name="description"
+        placeholder="Tell people about your event..."
+      ></textarea>
     </div>
 
     <div class="form-row">
@@ -101,26 +115,44 @@
 
       <div class="form-group">
         <label for="location">Location *</label>
-        <input type="text" id="location" name="location" required maxlength="100" placeholder="e.g., Main Hall, Room 204">
+        <input
+          type="text"
+          id="location"
+          name="location"
+          required
+          maxlength="100"
+          placeholder="e.g., Main Hall, Room 204"
+        />
       </div>
     </div>
 
     <div class="form-row">
       <div class="form-group">
         <label for="start_datetime">Start Date & Time *</label>
-        <input type="datetime-local" id="start_datetime" name="start_datetime" required>
+        <input
+          type="datetime-local"
+          id="start_datetime"
+          name="start_datetime"
+          required
+        />
       </div>
 
       <div class="form-group">
         <label for="end_datetime">End Date & Time</label>
-        <input type="datetime-local" id="end_datetime" name="end_datetime">
+        <input type="datetime-local" id="end_datetime" name="end_datetime" />
         <p class="help-text">Optional</p>
       </div>
     </div>
 
     <div class="form-group">
       <label for="max_attendees">Maximum Attendees</label>
-      <input type="number" id="max_attendees" name="max_attendees" min="1" placeholder="Leave blank for unlimited">
+      <input
+        type="number"
+        id="max_attendees"
+        name="max_attendees"
+        min="1"
+        placeholder="Leave blank for unlimited"
+      />
       <p class="help-text">Optional - set a cap on registrations</p>
     </div>
 

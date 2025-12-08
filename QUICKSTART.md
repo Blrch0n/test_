@@ -3,6 +3,7 @@
 ## For Team Members: Get Running in 5 Minutes
 
 ### Prerequisites
+
 - ✅ Node.js installed (v14+)
 - ✅ Access to remote MySQL server
 - ✅ Database password from instructor
@@ -12,12 +13,14 @@
 ## Step 1: Get the Code (Choose One)
 
 ### Option A: From GitLab (After Upload)
+
 ```bash
 git clone https://gitlab.com/<username>/event-portal.git
 cd event-portal
 ```
 
 ### Option B: Already Have the Code
+
 ```bash
 cd /home/bolro/Downloads/ulsbold
 # or wherever the project is located
@@ -26,6 +29,7 @@ cd /home/bolro/Downloads/ulsbold
 ---
 
 ## Step 2: Install Dependencies
+
 ```bash
 npm install
 ```
@@ -37,11 +41,13 @@ npm install
 ## Step 3: Configure Database
 
 ### 3.1 Copy Environment Template
+
 ```bash
 cp .env.example .env
 ```
 
 ### 3.2 Edit .env File
+
 Open `.env` and replace `YOUR_PASSWORD_HERE` with the actual database password:
 
 ```env
@@ -56,6 +62,7 @@ PORT=3000
 ### 3.3 Setup Database Tables
 
 **Option 1: Using HeidiSQL (Recommended)**
+
 1. Open HeidiSQL
 2. New Session:
    - Host: `203.91.116.122`
@@ -72,6 +79,7 @@ PORT=3000
 8. Click "Execute" (F9)
 
 **Option 2: Command Line**
+
 ```bash
 mysql -h 203.91.116.122 -P 22136 -u teams -p team6_event_portal < database/setup.sql
 ```
@@ -81,16 +89,19 @@ mysql -h 203.91.116.122 -P 22136 -u teams -p team6_event_portal < database/setup
 ## Step 4: Start the Application
 
 ### Development Mode (Auto-reload)
+
 ```bash
 npm run dev
 ```
 
 ### Regular Mode
+
 ```bash
 npm start
 ```
 
 **Expected output**:
+
 ```
 Server running on http://localhost:3000
 ```
@@ -100,14 +111,17 @@ Server running on http://localhost:3000
 ## Step 5: Test It Works
 
 ### 5.1 Open Browser
+
 Navigate to: **http://localhost:3000**
 
 ### 5.2 Test Database Connection
+
 Visit: **http://localhost:3000/db-test**
 
 Should see: `{"success": true, "data": [{"result": 1}]}`
 
 ### 5.3 Register Test User
+
 1. Click "Register"
 2. Fill in:
    - Name: Your Name
@@ -139,13 +153,17 @@ Should see: `{"success": true, "data": [{"result": 1}]}`
 ## Common Issues & Fixes
 
 ### ❌ "Cannot connect to database"
-**Fix**: 
+
+**Fix**:
+
 - Check `.env` has correct password
 - Verify database exists in HeidiSQL
 - Ping the server: `ping 203.91.116.122`
 
 ### ❌ "Port 3000 already in use"
-**Fix**: 
+
+**Fix**:
+
 ```bash
 # Change port in .env
 PORT=3001
@@ -156,13 +174,16 @@ kill -9 <PID>
 ```
 
 ### ❌ "Module not found"
+
 **Fix**:
+
 ```bash
 rm -rf node_modules package-lock.json
 npm install
 ```
 
 ### ❌ Tables don't exist
+
 **Fix**: Run the SQL setup again in HeidiSQL
 
 ---
@@ -170,13 +191,16 @@ npm install
 ## Development Workflow
 
 ### 1. Make Changes
+
 Edit files in your code editor (VS Code recommended)
 
 ### 2. Test Locally
+
 - If using `npm run dev`, changes auto-reload
 - If using `npm start`, restart with Ctrl+C then `npm start`
 
 ### 3. Commit Changes
+
 ```bash
 git add .
 git commit -m "Description of changes"
@@ -184,6 +208,7 @@ git push origin master
 ```
 
 ### 4. Deploy to Server (When Ready)
+
 See `docs/DEPLOYMENT.md` for full instructions.
 
 ---
@@ -214,6 +239,7 @@ event-portal/
 ## Team Roles & Responsibilities
 
 ### Ulsbold (PM)
+
 - Coordinate team meetings
 - Track progress against milestones
 - Update documentation
@@ -221,6 +247,7 @@ event-portal/
 - Prepare final presentation
 
 ### Amarjargal (Backend)
+
 - Work on `app.js` (routes, logic)
 - Handle database queries
 - Implement authentication
@@ -228,6 +255,7 @@ event-portal/
 - Deploy to server
 
 ### Khosbayar (Frontend)
+
 - Work on `views/` folder (EJS templates)
 - Style with CSS
 - Improve UX/UI
@@ -290,6 +318,7 @@ git push origin master
 ## Getting Help
 
 **Stuck?** Check in this order:
+
 1. Error message in terminal
 2. Browser console (F12)
 3. Check PM2 logs (if deployed): `pm2 logs`
@@ -298,6 +327,7 @@ git push origin master
 6. Google the error message
 
 **Common Questions**:
+
 - "How do I...?" → Check `README.md` or `docs/`
 - "What does this error mean?" → Copy error to team chat
 - "Can I change...?" → Yes! Make changes and test
@@ -328,4 +358,4 @@ Any issues? Contact your team members or check the documentation.
 
 ---
 
-*Last updated: December 8, 2025*
+_Last updated: December 8, 2025_

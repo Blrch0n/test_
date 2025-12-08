@@ -5,76 +5,96 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .page-header h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #2d3748;
   }
 
   .filter-form {
     background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 2rem;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2.5rem;
+    border: 1px solid #e2e8f0;
   }
 
   .filter-form h3 {
-    margin-bottom: 1rem;
-    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    color: #2d3748;
+    font-weight: 700;
+    font-size: 1.2rem;
   }
 
   .filter-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: 1.2rem;
+    margin-bottom: 1.2rem;
   }
 
   .filter-grid input,
   .filter-grid select {
     width: 100%;
-    padding: 0.7rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 0.9rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+  }
+
+  .filter-grid input:focus,
+  .filter-grid select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
   }
 
   .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 2rem;
   }
 
   .event-card {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
   }
 
   .event-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08);
   }
 
   .event-header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 1.5rem;
+    padding: 1.8rem;
   }
 
   .event-header h3 {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
+    font-size: 1.4rem;
+    font-weight: 700;
   }
 
   .event-body {
-    padding: 1.5rem;
+    padding: 1.8rem;
   }
 
   .event-meta {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    color: #555;
+    gap: 0.7rem;
+    margin-bottom: 1.2rem;
+    color: #4a5568;
   }
 
   .event-meta-item {

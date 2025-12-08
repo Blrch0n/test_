@@ -3,6 +3,7 @@
 A comprehensive campus event management system built with Node.js, Express, EJS, and MySQL.
 
 ## Team Members
+
 - **PM**: Ulsbold
 - **Backend**: Amarjargal
 - **Frontend**: Khosbayar
@@ -10,6 +11,7 @@ A comprehensive campus event management system built with Node.js, Express, EJS,
 ## Features
 
 ### Core Functionality (MUST Requirements)
+
 - ✅ **User Authentication**: Register, login, logout with secure password hashing
 - ✅ **Event Creation**: Hosts can create, edit, and delete events
 - ✅ **Event Browsing**: Filter events by date, category, and host
@@ -17,6 +19,7 @@ A comprehensive campus event management system built with Node.js, Express, EJS,
 - ✅ **Host Dashboard**: View event statistics and participant lists
 
 ### Additional Features (SHOULD/COULD)
+
 - ✅ **Admin Panel**: Manage all events across the platform
 - ✅ **Real-time Attendance**: Automatic registration counting
 - ✅ **Event Categories**: Academic, Social, Sports, Club, Workshop, Other
@@ -34,6 +37,7 @@ A comprehensive campus event management system built with Node.js, Express, EJS,
 ## Database Structure
 
 ### Users Table
+
 ```sql
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -46,6 +50,7 @@ CREATE TABLE users (
 ```
 
 ### Events Table
+
 ```sql
 CREATE TABLE events (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -63,6 +68,7 @@ CREATE TABLE events (
 ```
 
 ### Registrations Table
+
 ```sql
 CREATE TABLE registrations (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -78,6 +84,7 @@ CREATE TABLE registrations (
 ## Local Setup
 
 ### Prerequisites
+
 - Node.js (v14 or higher)
 - npm or yarn
 - Access to remote MySQL server
@@ -85,22 +92,26 @@ CREATE TABLE registrations (
 ### Installation Steps
 
 1. **Clone the repository**
+
    ```bash
    git clone https://gitlab.com/<your-username>/event-portal.git
    cd event-portal
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Configure environment variables**
+
    ```bash
    cp .env.example .env
    ```
-   
+
    Edit `.env` and add your database credentials:
+
    ```
    DB_HOST=203.91.116.122
    DB_PORT=22136
@@ -111,14 +122,16 @@ CREATE TABLE registrations (
    ```
 
 4. **Setup database**
+
    - Connect to MySQL using HeidiSQL or command line
    - Run the SQL scripts to create tables (see Database Structure above)
 
 5. **Run the application**
+
    ```bash
    # Development mode (with auto-reload)
    npm run dev
-   
+
    # Production mode
    npm start
    ```
@@ -131,8 +144,9 @@ CREATE TABLE registrations (
 ## Testing Database Connection
 
 Visit http://localhost:3000/db-test to verify database connectivity. You should see:
+
 ```json
-{"success": true, "data": [{"result": 1}]}
+{ "success": true, "data": [{ "result": 1 }] }
 ```
 
 ## Deployment (Remote Server)
@@ -140,11 +154,13 @@ Visit http://localhost:3000/db-test to verify database connectivity. You should 
 ### Deploy to 203.91.116.122
 
 1. **SSH into server**
+
    ```bash
    ssh studentXX@203.91.116.122 -p 6122
    ```
 
 2. **Clone repository**
+
    ```bash
    git clone https://gitlab.com/<your-username>/event-portal.git
    cd event-portal
@@ -152,12 +168,14 @@ Visit http://localhost:3000/db-test to verify database connectivity. You should 
    ```
 
 3. **Create .env file**
+
    ```bash
    nano .env
    # Add your environment variables
    ```
 
 4. **Run with assigned port**
+
    ```bash
    # For student01: PORT=3001
    # For student02: PORT=3002, etc.
@@ -224,17 +242,20 @@ event-portal/
 ## User Roles
 
 ### Student (Default)
+
 - Browse and filter events
 - Register/unregister for events
 - View registered events
 
 ### Host
+
 - All student permissions
 - Create, edit, delete own events
 - View participant lists
 - Access host dashboard
 
 ### Admin
+
 - All host permissions
 - Delete any event
 - View all events in admin panel
@@ -242,6 +263,7 @@ event-portal/
 ## Setting Admin Role
 
 Connect to MySQL and run:
+
 ```sql
 UPDATE users SET role='admin' WHERE email='youradmin@example.com';
 ```
@@ -249,6 +271,7 @@ UPDATE users SET role='admin' WHERE email='youradmin@example.com';
 ## API Routes
 
 ### Public Routes
+
 - `GET /` - Home page
 - `GET /events` - Browse events (with filtering)
 - `GET /events/:id` - Event details
@@ -258,12 +281,14 @@ UPDATE users SET role='admin' WHERE email='youradmin@example.com';
 - `POST /register` - Registration submission
 
 ### Authenticated Routes
+
 - `GET /dashboard` - User dashboard
 - `GET /logout` - Logout
 - `POST /events/:id/register` - Register for event
 - `POST /events/:id/unregister` - Unregister from event
 
 ### Host Routes
+
 - `GET /events/new` - Create event form
 - `POST /events` - Create event
 - `GET /events/my/list` - List own events
@@ -274,39 +299,46 @@ UPDATE users SET role='admin' WHERE email='youradmin@example.com';
 - `GET /host/events/:id/participants` - View participants
 
 ### Admin Routes
+
 - `GET /admin/events` - Admin panel
 - `POST /admin/events/:id/delete` - Delete any event
 
 ## Testing Checklist
 
 ### User Authentication
+
 - [ ] Register with new email → user created in database
 - [ ] Login with correct password → redirected to dashboard
 - [ ] Login with wrong password → error message shown
 - [ ] Logout → session destroyed, redirected to home
 
 ### Event Creation
+
 - [ ] Create event → appears in database
 - [ ] Edit event → changes saved
 - [ ] Delete event → removed from database
 
 ### Event Browsing
+
 - [ ] All events displayed on /events
 - [ ] Filter by date → correct results
 - [ ] Filter by category → correct results
 - [ ] Filter by host name → correct results
 
 ### Event Registration
+
 - [ ] Register for event → entry in registrations table
 - [ ] Unregister → entry removed
 - [ ] Cannot register twice → duplicate prevented
 
 ### Host Dashboard
+
 - [ ] View all own events with registration counts
 - [ ] View participant list for each event
 - [ ] Export participants to CSV
 
 ### Admin Panel
+
 - [ ] View all events in system
 - [ ] Delete any event → removed with registrations
 
@@ -332,6 +364,7 @@ UPDATE users SET role='admin' WHERE email='youradmin@example.com';
 ## Support & Contact
 
 For issues or questions, contact:
+
 - PM: Ulsbold
 - Backend Developer: Amarjargal
 - Frontend Developer: Khosbayar

@@ -12,7 +12,7 @@
   .events-table {
     background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
   }
 
@@ -52,48 +52,58 @@
   <p>Manage all events across the platform</p>
 </div>
 
-<h2 style="margin-bottom: 1rem;">All Events</h2>
+<h2 style="margin-bottom: 1rem">All Events</h2>
 
 <% if (events.length === 0) { %>
-  <div class="card">
-    <p>No events in the system.</p>
-  </div>
+<div class="card">
+  <p>No events in the system.</p>
+</div>
 <% } else { %>
-  <div class="events-table">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Host</th>
-          <th>Category</th>
-          <th>Date</th>
-          <th>Registrations</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% events.forEach(event => { %>
-          <tr>
-            <td>#<%= event.id %></td>
-            <td><strong><%= event.title %></strong></td>
-            <td><%= event.host_name %></td>
-            <td><span class="badge badge-warning"><%= event.category %></span></td>
-            <td><%= new Date(event.start_datetime).toLocaleDateString() %></td>
-            <td><span class="badge badge-info">👥 <%= event.attendee_count %></span></td>
-            <td>
-              <div class="event-actions">
-                <a href="/events/<%= event.id %>" class="btn">View</a>
-                <form method="POST" action="/admin/events/<%= event.id %>/delete" style="display: inline;">
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this event? This will also delete all registrations.')">Delete</button>
-                </form>
-              </div>
-            </td>
-          </tr>
-        <% }); %>
-      </tbody>
-    </table>
-  </div>
-<% } %>
-
-<%- include('../partials/footer-layout') %>
+<div class="events-table">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Host</th>
+        <th>Category</th>
+        <th>Date</th>
+        <th>Registrations</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% events.forEach(event => { %>
+      <tr>
+        <td>#<%= event.id %></td>
+        <td><strong><%= event.title %></strong></td>
+        <td><%= event.host_name %></td>
+        <td><span class="badge badge-warning"><%= event.category %></span></td>
+        <td><%= new Date(event.start_datetime).toLocaleDateString() %></td>
+        <td>
+          <span class="badge badge-info">👥 <%= event.attendee_count %></span>
+        </td>
+        <td>
+          <div class="event-actions">
+            <a href="/events/<%= event.id %>" class="btn">View</a>
+            <form
+              method="POST"
+              action="/admin/events/<%= event.id %>/delete"
+              style="display: inline"
+            >
+              <button
+                type="submit"
+                class="btn btn-danger"
+                onclick="return confirm('Delete this event? This will also delete all registrations.')"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+<% } %> <%- include('../partials/footer-layout') %>

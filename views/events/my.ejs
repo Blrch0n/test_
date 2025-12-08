@@ -11,7 +11,7 @@
   .events-table {
     background: white;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     overflow: hidden;
   }
 
@@ -69,52 +69,64 @@
 </div>
 
 <% if (events.length === 0) { %>
-  <div class="no-events">
-    <h3>You haven't created any events yet</h3>
-    <p>Create your first event to get started!</p>
-    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem;">Create Event</a>
-  </div>
+<div class="no-events">
+  <h3>You haven't created any events yet</h3>
+  <p>Create your first event to get started!</p>
+  <a href="/events/new" class="btn btn-success" style="margin-top: 1rem"
+    >Create Event</a
+  >
+</div>
 <% } else { %>
-  <div class="events-table">
-    <table>
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Category</th>
-          <th>Date & Time</th>
-          <th>Location</th>
-          <th>Registrations</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% events.forEach(event => { %>
-          <tr>
-            <td><strong><%= event.title %></strong></td>
-            <td><span class="badge badge-warning"><%= event.category %></span></td>
-            <td><%= new Date(event.start_datetime).toLocaleString() %></td>
-            <td>📍 <%= event.location %></td>
-            <td>
-              <span class="badge badge-info">👥 <%= event.attendee_count %></span>
-              <% if (event.max_attendees) { %>
-                / <%= event.max_attendees %>
-              <% } %>
-            </td>
-            <td>
-              <div class="event-actions">
-                <a href="/events/<%= event.id %>" class="btn">View</a>
-                <a href="/events/<%= event.id %>/edit" class="btn">Edit</a>
-                <a href="/host/events/<%= event.id %>/participants" class="btn btn-success">Participants</a>
-                <form method="POST" action="/events/<%= event.id %>/delete" style="display: inline;">
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this event?')">Delete</button>
-                </form>
-              </div>
-            </td>
-          </tr>
-        <% }); %>
-      </tbody>
-    </table>
-  </div>
-<% } %>
-
-<%- include('../partials/footer-layout') %>
+<div class="events-table">
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Date & Time</th>
+        <th>Location</th>
+        <th>Registrations</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% events.forEach(event => { %>
+      <tr>
+        <td><strong><%= event.title %></strong></td>
+        <td><span class="badge badge-warning"><%= event.category %></span></td>
+        <td><%= new Date(event.start_datetime).toLocaleString() %></td>
+        <td>📍 <%= event.location %></td>
+        <td>
+          <span class="badge badge-info">👥 <%= event.attendee_count %></span>
+          <% if (event.max_attendees) { %> / <%= event.max_attendees %> <% } %>
+        </td>
+        <td>
+          <div class="event-actions">
+            <a href="/events/<%= event.id %>" class="btn">View</a>
+            <a href="/events/<%= event.id %>/edit" class="btn">Edit</a>
+            <a
+              href="/host/events/<%= event.id %>/participants"
+              class="btn btn-success"
+              >Participants</a
+            >
+            <form
+              method="POST"
+              action="/events/<%= event.id %>/delete"
+              style="display: inline"
+            >
+              <button
+                type="submit"
+                class="btn btn-danger"
+                onclick="return confirm('Delete this event?')"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+<% } %> <%- include('../partials/footer-layout') %>
