@@ -171,7 +171,9 @@
   <% if (events.length === 0) { %>
   <div class="no-events">
     <h3>You haven't created any events yet</h3>
-    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem">Create Your First Event</a>
+    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem"
+      >Create Your First Event</a
+    >
   </div>
   <% } else { %>
   <div class="events-table-container">
@@ -188,14 +190,18 @@
       <tbody>
         <% events.forEach(event => { %>
         <tr>
-          <td><strong style="color: #111827;"><%= event.title %></strong></td>
+          <td><strong style="color: #111827"><%= event.title %></strong></td>
           <td><%= new Date(event.start_datetime).toLocaleString() %></td>
           <td><%= event.location %></td>
           <td>
             <span class="badge badge-info"><%= event.registrations %></span>
           </td>
           <td>
-            <a href="/host/events/<%= event.id %>/participants" class="btn btn-success">View Participants</a>
+            <a
+              href="/host/events/<%= event.id %>/participants"
+              class="btn btn-success"
+              >View Participants</a
+            >
           </td>
         </tr>
         <% }); %>

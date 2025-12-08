@@ -111,7 +111,9 @@
     <h1><%= event.title %></h1>
     <div class="event-badges">
       <span class="badge badge-warning"><%= event.category %></span>
-      <span class="badge badge-info"><%= event.attendee_count %> registered</span>
+      <span class="badge badge-info"
+        ><%= event.attendee_count %> registered</span
+      >
     </div>
   </div>
 
@@ -167,28 +169,31 @@
   <div class="detail-section">
     <h2>Registration</h2>
 
-    <% if (user) { %> 
-      <% if (isRegistered) { %>
-        <div class="registration-status">
-          You are registered for this event!
-        </div>
-        <form method="POST" action="/events/<%= event.id %>/unregister">
-          <button type="submit" class="btn btn-danger">Cancel Registration</button>
-        </form>
-      <% } else { %> 
-        <% if (event.max_attendees && event.attendee_count >= event.max_attendees) { %>
-          <div class="alert alert-error">This event is full.</div>
-        <% } else { %>
-          <p style="margin-bottom: 1rem; color: #4b5563;">Interested in this event? Register now!</p>
-          <form method="POST" action="/events/<%= event.id %>/register">
-            <button type="submit" class="btn btn-success">Register</button>
-          </form>
-        <% } %> 
-      <% } %> 
+    <% if (user) { %> <% if (isRegistered) { %>
+    <div class="registration-status">You are registered for this event!</div>
+    <form method="POST" action="/events/<%= event.id %>/unregister">
+      <button type="submit" class="btn btn-danger">Cancel Registration</button>
+    </form>
+    <% } else { %> <% if (event.max_attendees && event.attendee_count >=
+    event.max_attendees) { %>
+    <div class="alert alert-error">This event is full.</div>
     <% } else { %>
-      <div class="alert alert-error">
-        Please <a href="/login" style="color: #991b1b; text-decoration: underline; font-weight: 600;">log in</a> to register.
-      </div>
+    <p style="margin-bottom: 1rem; color: #4b5563">
+      Interested in this event? Register now!
+    </p>
+    <form method="POST" action="/events/<%= event.id %>/register">
+      <button type="submit" class="btn btn-success">Register</button>
+    </form>
+    <% } %> <% } %> <% } else { %>
+    <div class="alert alert-error">
+      Please
+      <a
+        href="/login"
+        style="color: #991b1b; text-decoration: underline; font-weight: 600"
+        >log in</a
+      >
+      to register.
+    </div>
     <% } %>
   </div>
 
@@ -197,8 +202,14 @@
     <h2>Organizer Actions</h2>
     <div class="action-buttons">
       <a href="/events/<%= event.id %>/edit" class="btn">Edit Event</a>
-      <a href="/host/events/<%= event.id %>/participants" class="btn">View Participants</a>
-      <form method="POST" action="/events/<%= event.id %>/delete" style="display: inline">
+      <a href="/host/events/<%= event.id %>/participants" class="btn"
+        >View Participants</a
+      >
+      <form
+        method="POST"
+        action="/events/<%= event.id %>/delete"
+        style="display: inline"
+      >
         <button
           type="submit"
           class="btn btn-danger"

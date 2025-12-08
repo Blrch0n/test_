@@ -31,12 +31,8 @@
               <div class="user-menu-role"><%= user.role %></div>
             </div>
             <a href="/dashboard" class="user-menu-item">Dashboard</a>
-            <a href="/events/my/list" class="user-menu-item"
-              >My Events</a
-            >
-            <a href="/host/dashboard" class="user-menu-item"
-              >Host Dashboard</a
-            >
+            <a href="/events/my/list" class="user-menu-item">My Events</a>
+            <a href="/host/dashboard" class="user-menu-item">Host Dashboard</a>
             <% if (user.role === 'admin') { %>
             <div class="user-menu-divider"></div>
             <a href="/admin/events" class="user-menu-item user-menu-admin"

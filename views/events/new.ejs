@@ -98,7 +98,9 @@
 </style>
 
 <div class="form-shell">
-  <a href="/events/my/list" class="btn btn-secondary back-link">← Back to My Events</a>
+  <a href="/events/my/list" class="btn btn-secondary back-link"
+    >← Back to My Events</a
+  >
 
   <div class="form-container">
     <h2>Create New Event</h2>
@@ -107,7 +109,14 @@
     <form method="POST" action="/events">
       <div class="form-group">
         <label for="title">Event Name *</label>
-        <input type="text" id="title" name="title" required maxlength="150" placeholder="e.g., Development Workshop" />
+        <input
+          type="text"
+          id="title"
+          name="title"
+          required
+          maxlength="150"
+          placeholder="e.g., Development Workshop"
+        />
       </div>
 
       <div class="form-group">

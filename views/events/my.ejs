@@ -141,19 +141,26 @@
       <tbody>
         <% events.forEach(event => { %>
         <tr>
-          <td><strong style="color: #111827;"><%= event.title %></strong></td>
-          <td><span class="badge badge-warning"><%= event.category %></span></td>
+          <td><strong style="color: #111827"><%= event.title %></strong></td>
+          <td>
+            <span class="badge badge-warning"><%= event.category %></span>
+          </td>
           <td><%= new Date(event.start_datetime).toLocaleString() %></td>
           <td><%= event.location %></td>
           <td>
             <span class="badge badge-info"><%= event.attendee_count %></span>
-            <% if (event.max_attendees) { %> / <%= event.max_attendees %> <% } %>
+            <% if (event.max_attendees) { %> / <%= event.max_attendees %> <% }
+            %>
           </td>
           <td>
             <div class="event-actions">
               <a href="/events/<%= event.id %>" class="btn">View</a>
               <a href="/events/<%= event.id %>/edit" class="btn">Edit</a>
-              <a href="/host/events/<%= event.id %>/participants" class="btn btn-success">Participants</a>
+              <a
+                href="/host/events/<%= event.id %>/participants"
+                class="btn btn-success"
+                >Participants</a
+              >
               <form
                 method="POST"
                 action="/events/<%= event.id %>/delete"
