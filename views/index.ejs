@@ -90,46 +90,45 @@
 </style>
 
 <div class="hero">
-  <h1>Арга Хэмжээний Порталд Тавтай Морилно Уу</h1>
-  <p>Сургуулийн арга хэмжээнүүдийг олох, үүсгэх, удирдах</p>
+  <h1>Welcome to the Event Management Portal</h1>
+  <p>Discover, create, and manage university events</p>
   <% if (!user) { %>
   <div class="hero-buttons">
-    <a href="/register" class="btn btn-success">Эхлэх</a>
-    <a href="/events" class="btn">Арга хэмжээ үзэх</a>
+    <a href="/register" class="btn btn-success">Get Started</a>
+    <a href="/events" class="btn">Browse Events</a>
   </div>
   <% } else { %>
   <div class="hero-buttons">
-    <a href="/events" class="btn btn-success">Арга хэмжээ үзэх</a>
-    <a href="/events/new" class="btn">Арга хэмжээ үүсгэх</a>
+    <a href="/events" class="btn btn-success">Browse Events</a>
+    <a href="/events/new" class="btn">Create Event</a>
   </div>
   <% } %>
 </div>
 
 <div class="features">
   <div class="feature-card">
-    <span class="feature-label">Хайлт</span>
-    <h3>Арга хэмжээ олох</h3>
+    <span class="feature-label">Discovery</span>
+    <h3>Find Events</h3>
     <p>
-      Огноо, төрөл, зохион байгуулагчаар шүүж, сургуулийн арга хэмжээнүүдийг
-      үзнэ. Өөрт тохирсон арга хэмжээг олоорой.
+      Browse university events filtered by date, category, and organizer.
+      Find events that match your interests.
     </p>
   </div>
 
   <div class="feature-card">
-    <span class="feature-label">Удирдлага</span>
-    <h3>Арга хэмжээ зохион байгуулах</h3>
+    <span class="feature-label">Management</span>
+    <h3>Organize Events</h3>
     <p>
-      Өөрийн арга хэмжээг үүсгэж, сургуулийн хүмүүст хүргэнэ. Бүртгэлийг
-      удирдаж, ирцийг хянана.
+      Create your own events and share them with the university community.
+      Manage registrations and track attendance.
     </p>
   </div>
 
   <div class="feature-card">
-    <span class="feature-label">Бүртгэл</span>
-    <h3>Хялбар бүртгүүлэх</h3>
+    <span class="feature-label">Registration</span>
+    <h3>Easy Sign-Up</h3>
     <p>
-      Нэг товчлуураар арга хэмжээнд бүртгүүлж, имэйлээр баталгаажуулалт
-      авна.
+      Register for events with one click and receive email confirmation.
     </p>
   </div>
 </div>

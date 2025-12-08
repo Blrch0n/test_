@@ -176,36 +176,36 @@
 
 <div class="events-shell">
   <div class="page-header">
-    <h1>Арга хэмжээнүүд</h1>
-    <a href="/events/new" class="btn btn-success">+ Арга хэмжээ үүсгэх</a>
+    <h1>Events</h1>
+    <a href="/events/new" class="btn btn-success">+ Create Event</a>
   </div>
 
   <div class="filter-form">
-    <h3>Арга хэмжээ шүүх</h3>
+    <h3>Filter Events</h3>
     <form method="GET" action="/events">
       <div class="filter-grid">
         <div>
-          <label>Огноо</label>
+          <label>Date</label>
           <input type="date" name="date" value="<%= filters.date || '' %>">
         </div>
         <div>
-          <label>Төрөл</label>
+          <label>Category</label>
           <select name="category">
-            <option value="">Бүх төрөл</option>
-            <option value="Academic" <%= filters.category === 'Academic' ? 'selected' : '' %>>Сургалт</option>
-            <option value="Social" <%= filters.category === 'Social' ? 'selected' : '' %>>Нийгмийн</option>
-            <option value="Sports" <%= filters.category === 'Sports' ? 'selected' : '' %>>Спорт</option>
-            <option value="Club" <%= filters.category === 'Club' ? 'selected' : '' %>>Клуб</option>
-            <option value="Workshop" <%= filters.category === 'Workshop' ? 'selected' : '' %>>Семинар</option>
-            <option value="Other" <%= filters.category === 'Other' ? 'selected' : '' %>>Бусад</option>
+            <option value="">All Categories</option>
+            <option value="Academic" <%= filters.category === 'Academic' ? 'selected' : '' %>>Academic</option>
+            <option value="Social" <%= filters.category === 'Social' ? 'selected' : '' %>>Social</option>
+            <option value="Sports" <%= filters.category === 'Sports' ? 'selected' : '' %>>Sports</option>
+            <option value="Club" <%= filters.category === 'Club' ? 'selected' : '' %>>Club</option>
+            <option value="Workshop" <%= filters.category === 'Workshop' ? 'selected' : '' %>>Workshop</option>
+            <option value="Other" <%= filters.category === 'Other' ? 'selected' : '' %>>Other</option>
           </select>
         </div>
         <div>
-          <label>Зохион байгуулагч</label>
-          <input type="text" name="host" placeholder="Зохион байгуулагчаар хайх..." value="<%= filters.host || '' %>">
+          <label>Organizer</label>
+          <input type="text" name="host" placeholder="Search by organizer..." value="<%= filters.host || '' %>">
         </div>
         <div style="display: flex; align-items: flex-end;">
-          <button type="submit" class="btn" style="width: 100%;">Шүүх</button>
+          <button type="submit" class="btn" style="width: 100%;">Filter</button>
         </div>
       </div>
     </form>
@@ -213,8 +213,8 @@
 
   <% if (events.length === 0) { %>
     <div class="no-events">
-      <h3>Арга хэмжээ олдсонгүй</h3>
-      <p>Шүүлтүүрээ өөрчлөн оролдоорой эсвэл <a href="/events/new">шинэ арга хэмжээ үүсгэх</a>!</p>
+      <h3>No events found</h3>
+      <p>Try changing your filters or <a href="/events/new">create a new event</a>!</p>
     </div>
   <% } else { %>
     <div class="events-grid">
@@ -240,13 +240,13 @@
               </div>
               <div class="event-meta-item">
                 <strong>Attendees:</strong>
-                <span><%= event.attendee_count %> бүртгүүлсэн</span>
+                <span><%= event.attendee_count %> registered</span>
               </div>
             </div>
-            <p class="event-description"><%= event.description ? (event.description.substring(0, 100) + (event.description.length > 100 ? '...' : '')) : 'Тайлбар байхгүй' %></p>
+            <p class="event-description"><%= event.description ? (event.description.substring(0, 100) + (event.description.length > 100 ? '...' : '')) : 'No description' %></p>
           </div>
           <div class="event-footer">
-            <a href="/events/<%= event.id %>" class="btn">Дэлгэрэнгүй</a>
+            <a href="/events/<%= event.id %>" class="btn">Details</a>
           </div>
         </div>
       <% }); %>

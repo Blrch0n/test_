@@ -15,11 +15,13 @@ app.use(express.static("public"));
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || "event-portal-secret-key-change-in-production",
+    secret:
+      process.env.SESSION_SECRET ||
+      "event-portal-secret-key-change-in-production",
     resave: false,
     saveUninitialized: false,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      maxAge: 24 * 60 * 60 * 1000,
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
     },
@@ -141,14 +143,12 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Logout
 app.get("/logout", (req, res) => {
   req.session.destroy(() => {
     res.redirect("/");
   });
 });
 
-// Dashboard
 app.get("/dashboard", isAuthenticated, (req, res) => {
   res.render("dashboard", {
     user: req.session.user,

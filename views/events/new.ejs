@@ -98,57 +98,57 @@
 </style>
 
 <div class="form-shell">
-  <a href="/events/my/list" class="btn btn-secondary back-link">← Миний арга хэмжээнүүд рүү буцах</a>
+  <a href="/events/my/list" class="btn btn-secondary back-link">← Back to My Events</a>
 
   <div class="form-container">
-    <h2>Шинэ арга хэмжээ үүсгэх</h2>
-    <p class="form-subtitle">Өөрийн арга хэмжээг зохион байгуулж, хүмүүсийг урина уу</p>
+    <h2>Create New Event</h2>
+    <p class="form-subtitle">Organize your event and invite people</p>
 
     <form method="POST" action="/events">
       <div class="form-group">
-        <label for="title">Арга хэмжээний нэр *</label>
-        <input type="text" id="title" name="title" required maxlength="150" placeholder="Жишээ нь: Хөгжлийн семинар" />
+        <label for="title">Event Name *</label>
+        <input type="text" id="title" name="title" required maxlength="150" placeholder="e.g., Development Workshop" />
       </div>
 
       <div class="form-group">
-        <label for="description">Тайлбар</label>
+        <label for="description">Description</label>
         <textarea
           id="description"
           name="description"
-          placeholder="Арга хэмжээний тухай мэдээллийг бичнэ үү..."
+          placeholder="Describe your event..."
         ></textarea>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="category">Төрөл *</label>
+          <label for="category">Category *</label>
           <select id="category" name="category" required>
-            <option value="">Төрлөө сонгоно уу...</option>
-            <option value="Academic">Сургалт</option>
-            <option value="Social">Нийгмийн</option>
-            <option value="Sports">Спорт</option>
-            <option value="Club">Клуб</option>
-            <option value="Workshop">Семинар</option>
-            <option value="Other">Бусад</option>
+            <option value="">Select a category...</option>
+            <option value="Academic">Academic</option>
+            <option value="Social">Social</option>
+            <option value="Sports">Sports</option>
+            <option value="Club">Club</option>
+            <option value="Workshop">Workshop</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="location">Байршил *</label>
+          <label for="location">Location *</label>
           <input
             type="text"
             id="location"
             name="location"
             required
             maxlength="100"
-            placeholder="Жишээ нь: Төв танхим, 204 тоот"
+            placeholder="e.g., Main Hall, Room 204"
           />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="start_datetime">Эхлэх огноо ба цаг *</label>
+          <label for="start_datetime">Start Date & Time *</label>
           <input
             type="datetime-local"
             id="start_datetime"
@@ -158,27 +158,27 @@
         </div>
 
         <div class="form-group">
-          <label for="end_datetime">Дуусах огноо ба цаг</label>
+          <label for="end_datetime">End Date & Time</label>
           <input type="datetime-local" id="end_datetime" name="end_datetime" />
-          <p class="help-text">Сонголттой</p>
+          <p class="help-text">Optional</p>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="max_attendees">Хамгийн их оролцогчдын тоо</label>
+        <label for="max_attendees">Maximum Attendees</label>
         <input
           type="number"
           id="max_attendees"
           name="max_attendees"
           min="1"
-          placeholder="Хязгааргүй бол хоосон үлдээнэ"
+          placeholder="Leave empty for unlimited"
         />
-        <p class="help-text">Сонголттой - бүртгэлд хязгаар тавих</p>
+        <p class="help-text">Optional - set a limit for registrations</p>
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="btn btn-success">Арга хэмжээ үүсгэх</button>
-        <a href="/events/my/list" class="btn btn-secondary">Цуцлах</a>
+        <button type="submit" class="btn btn-success">Create Event</button>
+        <a href="/events/my/list" class="btn btn-secondary">Cancel</a>
       </div>
     </form>
   </div>

@@ -134,7 +134,7 @@
 
 <div class="participants-shell">
   <a href="/host/dashboard" class="btn btn-secondary back-link"
-    >← Зохион байгуулагчийн самбар руу буцах</a
+    >← Back to Host Dashboard</a
   >
 
   <div class="event-info">
@@ -144,23 +144,23 @@
       event.location %>
     </p>
     <p style="margin-top: 1rem">
-      <strong>Нийт оролцогчид: <%= participants.length %></strong>
+      <strong>Total Participants: <%= participants.length %></strong>
     </p>
   </div>
 
   <div class="section-header">
-    <h2>Бүртгүүлсэн оролцогчид</h2>
+    <h2>Registered Participants</h2>
     <% if (participants.length > 0) { %>
     <button onclick="exportToCSV()" class="btn btn-success">
-      CSV татаж авах
+      Download CSV
     </button>
     <% } %>
   </div>
 
   <% if (participants.length === 0) { %>
   <div class="no-participants">
-    <h3>Одоогоор оролцогч байхгүй байна</h3>
-    <p>Хүмүүс таны арга хэмжээнд бүртгүүлэхэд энд харагдах болно.</p>
+    <h3>No participants yet</h3>
+    <p>When people register for your event, they'll appear here.</p>
   </div>
   <% } else { %>
   <div class="participants-table-container">
@@ -168,9 +168,9 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Нэр</th>
-          <th>Имэйл</th>
-          <th>Бүртгүүлсэн огноо</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Registration Date</th>
         </tr>
       </thead>
       <tbody>

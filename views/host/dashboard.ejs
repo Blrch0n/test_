@@ -142,8 +142,8 @@
 
 <div class="host-shell">
   <div class="dashboard-header">
-    <h1>Зохион байгуулагчийн самбар</h1>
-    <p>Арга хэмжээнүүдээ удирдаж, бүртгэлийн статистикийг харах</p>
+    <h1>Host Dashboard</h1>
+    <p>Manage your events and view registration statistics</p>
   </div>
 
   <% const totalEvents = events.length; const totalRegistrations =
@@ -153,36 +153,36 @@
 
   <div class="stats-grid">
     <div class="stat-card">
-      <div class="stat-label">Нийт арга хэмжээ</div>
+      <div class="stat-label">Total Events</div>
       <div class="stat-number"><%= totalEvents %></div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Нийт бүртгэл</div>
+      <div class="stat-label">Total Registrations</div>
       <div class="stat-number"><%= totalRegistrations %></div>
     </div>
     <div class="stat-card">
-      <div class="stat-label">Дундаж бүртгэл</div>
+      <div class="stat-label">Average Registrations</div>
       <div class="stat-number"><%= avgRegistrations %></div>
     </div>
   </div>
 
-  <h2 class="section-title">Таны арга хэмжээнүүд</h2>
+  <h2 class="section-title">Your Events</h2>
 
   <% if (events.length === 0) { %>
   <div class="no-events">
-    <h3>Та одоогоор арга хэмжээ үүсгээгүй байна</h3>
-    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem">Эхний арга хэмжээгээ үүсгэх</a>
+    <h3>You haven't created any events yet</h3>
+    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem">Create Your First Event</a>
   </div>
   <% } else { %>
   <div class="events-table-container">
     <table>
       <thead>
         <tr>
-          <th>Арга хэмжээний гарчиг</th>
-          <th>Огноо ба цаг</th>
-          <th>Байршил</th>
-          <th>Бүртгэл</th>
-          <th>Үйлдлүүд</th>
+          <th>Event Title</th>
+          <th>Date & Time</th>
+          <th>Location</th>
+          <th>Registrations</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -195,7 +195,7 @@
             <span class="badge badge-info"><%= event.registrations %></span>
           </td>
           <td>
-            <a href="/host/events/<%= event.id %>/participants" class="btn btn-success">Оролцогчдыг үзэх</a>
+            <a href="/host/events/<%= event.id %>/participants" class="btn btn-success">View Participants</a>
           </td>
         </tr>
         <% }); %>

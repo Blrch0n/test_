@@ -98,68 +98,68 @@
 </style>
 
 <div class="form-shell">
-  <a href="/events/my/list" class="btn btn-secondary back-link">← Миний арга хэмжээнүүд рүү буцах</a>
+  <a href="/events/my/list" class="btn btn-secondary back-link">← Back to My Events</a>
   
   <div class="form-container">
-    <h2>Арга хэмжээ засах</h2>
-    <p class="form-subtitle">Арга хэмжээний мэдээллийг шинэчлэх</p>
+    <h2>Edit Event</h2>
+    <p class="form-subtitle">Update event information</p>
 
     <form method="POST" action="/events/<%= event.id %>/edit">
       <div class="form-group">
-        <label for="title">Арга хэмжээний нэр *</label>
+        <label for="title">Event Name *</label>
         <input type="text" id="title" name="title" value="<%= event.title %>" required maxlength="150">
       </div>
 
       <div class="form-group">
-        <label for="description">Тайлбар</label>
-        <textarea id="description" name="description" placeholder="Арга хэмжээний тухай мэдээллийг бичнэ үү..."><%= event.description || '' %></textarea>
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Describe your event..."><%= event.description || '' %></textarea>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="category">Төрөл *</label>
+          <label for="category">Category *</label>
           <select id="category" name="category" required>
-            <option value="">Төрлөө сонгоно уу...</option>
-            <option value="Academic" <%= event.category === 'Academic' ? 'selected' : '' %>>Сургалт</option>
-            <option value="Social" <%= event.category === 'Social' ? 'selected' : '' %>>Нийгмийн</option>
-            <option value="Sports" <%= event.category === 'Sports' ? 'selected' : '' %>>Спорт</option>
-            <option value="Club" <%= event.category === 'Club' ? 'selected' : '' %>>Клуб</option>
-            <option value="Workshop" <%= event.category === 'Workshop' ? 'selected' : '' %>>Семинар</option>
-            <option value="Other" <%= event.category === 'Other' ? 'selected' : '' %>>Бусад</option>
+            <option value="">Select a category...</option>
+            <option value="Academic" <%= event.category === 'Academic' ? 'selected' : '' %>>Academic</option>
+            <option value="Social" <%= event.category === 'Social' ? 'selected' : '' %>>Social</option>
+            <option value="Sports" <%= event.category === 'Sports' ? 'selected' : '' %>>Sports</option>
+            <option value="Club" <%= event.category === 'Club' ? 'selected' : '' %>>Club</option>
+            <option value="Workshop" <%= event.category === 'Workshop' ? 'selected' : '' %>>Workshop</option>
+            <option value="Other" <%= event.category === 'Other' ? 'selected' : '' %>>Other</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label for="location">Байршил *</label>
-          <input type="text" id="location" name="location" value="<%= event.location %>" required maxlength="100" placeholder="Жишээ нь: Төв танхим, 204 тоот">
+          <label for="location">Location *</label>
+          <input type="text" id="location" name="location" value="<%= event.location %>" required maxlength="100" placeholder="e.g., Main Hall, Room 204">
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group">
-          <label for="start_datetime">Эхлэх огноо ба цаг *</label>
+          <label for="start_datetime">Start Date & Time *</label>
           <input type="datetime-local" id="start_datetime" name="start_datetime" 
                  value="<%= new Date(event.start_datetime).toISOString().slice(0, 16) %>" required>
         </div>
 
         <div class="form-group">
-          <label for="end_datetime">Дуусах огноо ба цаг</label>
+          <label for="end_datetime">End Date & Time</label>
           <input type="datetime-local" id="end_datetime" name="end_datetime" 
                  value="<%= event.end_datetime ? new Date(event.end_datetime).toISOString().slice(0, 16) : '' %>">
-          <p class="help-text">Сонголттой</p>
+          <p class="help-text">Optional</p>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="max_attendees">Хамгийн их оролцогчдын тоо</label>
+        <label for="max_attendees">Maximum Attendees</label>
         <input type="number" id="max_attendees" name="max_attendees" min="1" 
-               value="<%= event.max_attendees || '' %>" placeholder="Хязгааргүй бол хоосон үлдээнэ">
-        <p class="help-text">Сонголттой - бүртгэлд хязгаар тавих</p>
+               value="<%= event.max_attendees || '' %>" placeholder="Leave empty for unlimited">
+        <p class="help-text">Optional - set a limit for registrations</p>
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="btn btn-success">Өөрчлөлт хадгалах</button>
-        <a href="/events/my/list" class="btn btn-secondary">Цуцлах</a>
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a href="/events/my/list" class="btn btn-secondary">Cancel</a>
       </div>
     </form>
   </div>

@@ -90,49 +90,49 @@
 
 <div class="dashboard-shell">
   <div class="dashboard-header">
-    <h1>Сайн байна уу, <%= user.name %>!</h1>
+    <h1>Hello, <%= user.name %>!</h1>
     <p>
-      Эрх: <strong><%= user.role.toUpperCase() %></strong> | Имэйл: <%= user.email %>
+      Role: <strong><%= user.role.toUpperCase() %></strong> | Email: <%= user.email %>
     </p>
   </div>
 
-  <h2 class="section-title">Шуурхай үйлдлүүд</h2>
+  <h2 class="section-title">Quick Actions</h2>
 
   <div class="quick-actions">
     <div class="action-card">
-      <span class="action-label">Хайлт</span>
-      <h3>Арга хэмжээ үзэх</h3>
-      <p>Сургуульд болох шинэ арга хэмжээнүүдийг олоорой</p>
-      <a href="/events" class="btn">Үзэх</a>
+      <span class="action-label">Browse</span>
+      <h3>View Events</h3>
+      <p>Discover new events happening at the university</p>
+      <a href="/events" class="btn">View</a>
     </div>
 
     <div class="action-card">
-      <span class="action-label">Үүсгэх</span>
-      <h3>Арга хэмжээ үүсгэх</h3>
-      <p>Шинэ арга хэмжээ зохион байгуулж оролцогчид урих</p>
-      <a href="/events/new" class="btn btn-success">Үүсгэх</a>
+      <span class="action-label">Create</span>
+      <h3>Create Event</h3>
+      <p>Organize a new event and invite participants</p>
+      <a href="/events/new" class="btn btn-success">Create</a>
     </div>
 
     <div class="action-card">
-      <span class="action-label">Удирдлага</span>
-      <h3>Миний арга хэмжээнүүд</h3>
-      <p>Өөрийн үүсгэсэн арга хэмжээнүүдээ удирдах</p>
-      <a href="/events/my/list" class="btn">Үзэх</a>
+      <span class="action-label">Manage</span>
+      <h3>My Events</h3>
+      <p>Manage your created events</p>
+      <a href="/events/my/list" class="btn">View</a>
     </div>
 
     <div class="action-card">
-      <span class="action-label">Статистик</span>
-      <h3>Зохион байгуулагчийн самбар</h3>
-      <p>Арга хэмжээний статистик болон оролцогчдыг харах</p>
-      <a href="/host/dashboard" class="btn">Самбар</a>
+      <span class="action-label">Statistics</span>
+      <h3>Host Dashboard</h3>
+      <p>View event statistics and participants</p>
+      <a href="/host/dashboard" class="btn">Dashboard</a>
     </div>
 
     <% if (user.role === 'admin') { %>
     <div class="action-card">
-      <span class="action-label">Админ</span>
-      <h3>Админ самбар</h3>
-      <p>Бүх арга хэмжээ болон хэрэглэгчдийг удирдах</p>
-      <a href="/admin/events" class="btn btn-danger">Админ</a>
+      <span class="action-label">Admin</span>
+      <h3>Admin Dashboard</h3>
+      <p>Manage all events and users</p>
+      <a href="/admin/events" class="btn btn-danger">Admin</a>
     </div>
     <% } %>
   </div>
