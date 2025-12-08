@@ -1,109 +1,364 @@
 <%- include('../partials/header-layout') %>
 
 <style>
+  body {
+    background: #f3f4f6;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      sans-serif;
+  }
+
+  .admin-shell {
+    max-width: 1120px;
+    margin: 2.5rem auto 3rem;
+    padding: 0 1.5rem;
+  }
+
+  /* top header */
+
   .admin-header {
-    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-    color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    margin-bottom: 2rem;
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 1.75rem 2rem;
+    box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
-  .events-table {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  .admin-header-label {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin-bottom: 0.4rem;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
+  .admin-header-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
   }
 
-  thead {
-    background: #2c3e50;
-    color: white;
+  .admin-header-text {
+    margin: 0.4rem 0 0;
+    font-size: 0.95rem;
+    color: #6b7280;
   }
 
-  th {
-    padding: 1rem;
-    text-align: left;
+  .admin-header-side {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .admin-count {
+    text-align: right;
+  }
+
+  .admin-count-number {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1;
+  }
+
+  .admin-count-label {
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+
+  .admin-header-button {
+    border-radius: 999px;
+    border: none;
+    padding: 0.55rem 1.35rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: #2563eb;
+    color: #ffffff;
+    text-decoration: none;
+    box-shadow: 0 12px 25px rgba(37, 99, 235, 0.35);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .admin-header-button:hover {
+    background: #1d4ed8;
+  }
+
+  /* filter chips */
+
+  .admin-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-bottom: 1.4rem;
+    padding: 0 0.1rem;
+  }
+
+  .admin-chip {
+    border-radius: 999px;
+    border: 1px solid transparent;
+    padding: 0.35rem 0.95rem;
+    font-size: 0.85rem;
+    background: #e5e7eb;
+    color: #4b5563;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+  }
+
+  .admin-chip--active {
+    background: #111827;
+    color: #f9fafb;
+  }
+
+  /* grid of event cards */
+
+  .admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .admin-card {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #e5e7eb;
+    padding: 1rem 1.1rem 0.9rem;
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .admin-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .admin-card-title {
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.2rem;
+  }
+
+  .admin-card-meta {
+    margin: 0;
+    font-size: 0.82rem;
+    color: #6b7280;
+  }
+
+  .admin-card-meta span {
+    color: #4b5563;
+  }
+
+  .admin-card-category {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: #fef3c7;
+    color: #92400e;
+    white-space: nowrap;
+  }
+
+  .admin-card-body {
+    padding-top: 0.3rem;
+    border-top: 1px dashed #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    font-size: 0.82rem;
+  }
+
+  .admin-card-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    color: #4b5563;
+  }
+
+  .admin-card-row span:first-child {
+    color: #9ca3af;
+  }
+
+  .admin-card-footer {
+    margin-top: 0.55rem;
+    border-top: 1px dashed #e5e7eb;
+    padding-top: 0.55rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .admin-card-link {
+    font-size: 0.85rem;
+    color: #2563eb;
+    text-decoration: none;
     font-weight: 500;
   }
 
-  td {
-    padding: 1rem;
-    border-bottom: 1px solid #ecf0f1;
+  .admin-card-link:hover {
+    text-decoration: underline;
   }
 
-  tbody tr:hover {
-    background: #f8f9fa;
+  .admin-card-delete {
+    border-radius: 999px;
+    border: none;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    background: #fee2e2;
+    color: #b91c1c;
+    cursor: pointer;
+    white-space: nowrap;
   }
 
-  .event-actions .btn {
-    padding: 0.4rem 0.8rem;
+  .admin-card-delete:hover {
+    background: #fecaca;
+  }
+
+  /* empty state */
+
+  .admin-empty {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+  }
+
+  .admin-empty h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    color: #111827;
+  }
+
+  .admin-empty p {
+    margin: 0 0 1rem;
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+
+  .admin-empty-btn {
+    border-radius: 999px;
+    background: #2563eb;
+    color: #ffffff;
+    padding: 0.5rem 1.3rem;
     font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .admin-empty-btn:hover {
+    background: #1d4ed8;
+  }
+
+  @media (max-width: 640px) {
+    .admin-header {
+      padding: 1.4rem 1.4rem 1.2rem;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .admin-header-side {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .admin-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 
-<div class="admin-header">
-  <h1>🛡️ Admin Panel</h1>
-  <p>Manage all events across the platform</p>
+<div class="admin-shell">
+  <section class="admin-header">
+    <div>
+      <div class="admin-header-label">🛡️ Admin · Events</div>
+      <h1 class="admin-header-title">Events overview</h1>
+      <p class="admin-header-text">
+        Manage all events on the platform – review, inspect and clean up
+        registrations.
+      </p>
+    </div>
+
+    <div class="admin-header-side">
+      <div class="admin-count">
+        <span class="admin-count-number"><%= events.length %></span>
+        <span class="admin-count-label">events in total</span>
+      </div>
+      <a href="/events/new" class="admin-header-button"> + New event </a>
+    </div>
+  </section>
+
+  <div class="admin-filters">
+    <button type="button" class="admin-chip admin-chip--active">All</button>
+    <button type="button" class="admin-chip">Upcoming</button>
+    <button type="button" class="admin-chip">Past</button>
+  </div>
+
+  <% if (events.length === 0) { %>
+  <div class="admin-empty">
+    <h2>No events yet</h2>
+    <p>Create the first one or check back later.</p>
+    <a href="/events/new" class="admin-empty-btn">Create event</a>
+  </div>
+  <% } else { %>
+  <section class="admin-grid">
+    <% events.forEach(event => { %>
+    <article class="admin-card">
+      <header class="admin-card-header">
+        <div>
+          <h3 class="admin-card-title"><%= event.title %></h3>
+          <p class="admin-card-meta">
+            #<%= event.id %> · <span><%= event.host_name %></span>
+          </p>
+        </div>
+        <span class="admin-card-category"><%= event.category %></span>
+      </header>
+
+      <div class="admin-card-body">
+        <p class="admin-card-row">
+          <span>Date</span>
+          <span
+            ><%= new Date(event.start_datetime).toLocaleDateString() %></span
+          >
+        </p>
+        <p class="admin-card-row">
+          <span>Registrations</span>
+          <span>👥 <%= event.attendee_count %></span>
+        </p>
+      </div>
+
+      <footer class="admin-card-footer">
+        <a href="/events/<%= event.id %>" class="admin-card-link"
+          >View details</a
+        >
+
+        <form
+          method="POST"
+          action="/admin/events/<%= event.id %>/delete"
+          onsubmit="return confirm('Delete this event? This will also delete all registrations.')"
+        >
+          <button type="submit" class="admin-card-delete">Delete</button>
+        </form>
+      </footer>
+    </article>
+    <% }) %>
+  </section>
+  <% } %>
 </div>
 
-<h2 style="margin-bottom: 1rem">All Events</h2>
-
-<% if (events.length === 0) { %>
-<div class="card">
-  <p>No events in the system.</p>
-</div>
-<% } else { %>
-<div class="events-table">
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Host</th>
-        <th>Category</th>
-        <th>Date</th>
-        <th>Registrations</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% events.forEach(event => { %>
-      <tr>
-        <td>#<%= event.id %></td>
-        <td><strong><%= event.title %></strong></td>
-        <td><%= event.host_name %></td>
-        <td><span class="badge badge-warning"><%= event.category %></span></td>
-        <td><%= new Date(event.start_datetime).toLocaleDateString() %></td>
-        <td>
-          <span class="badge badge-info">👥 <%= event.attendee_count %></span>
-        </td>
-        <td>
-          <div class="event-actions">
-            <a href="/events/<%= event.id %>" class="btn">View</a>
-            <form
-              method="POST"
-              action="/admin/events/<%= event.id %>/delete"
-              style="display: inline"
-            >
-              <button
-                type="submit"
-                class="btn btn-danger"
-                onclick="return confirm('Delete this event? This will also delete all registrations.')"
-              >
-                Delete
-              </button>
-            </form>
-          </div>
-        </td>
-      </tr>
-      <% }); %>
-    </tbody>
-  </table>
-</div>
-<% } %> <%- include('../partials/footer-layout') %>
+<%- include('../partials/footer-layout') %>

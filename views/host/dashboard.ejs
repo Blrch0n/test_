@@ -1,46 +1,77 @@
 <%- include('../partials/header-layout') %>
 
 <style>
+  .host-shell {
+    max-width: 1120px;
+    margin: 2.5rem auto 3rem;
+    padding: 0 1.5rem;
+  }
+
   .dashboard-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: #ffffff;
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e5e7eb;
     margin-bottom: 2rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+  }
+
+  .dashboard-header p {
+    color: #6b7280;
+    font-size: 0.95rem;
   }
 
   .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
   }
 
   .stat-card {
     background: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1.75rem;
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
     text-align: center;
   }
 
   .stat-number {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #3498db;
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: #2563eb;
     margin: 0.5rem 0;
+    line-height: 1;
   }
 
   .stat-label {
-    color: #7f8c8d;
+    color: #6b7280;
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
   }
 
-  .events-table {
+  .section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.25rem;
+  }
+
+  .events-table-container {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
     overflow: hidden;
   }
 
@@ -50,100 +81,128 @@
   }
 
   thead {
-    background: #2c3e50;
-    color: white;
+    background: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
   }
 
   th {
-    padding: 1rem;
+    padding: 1rem 1.25rem;
     text-align: left;
-    font-weight: 500;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   td {
-    padding: 1rem;
-    border-bottom: 1px solid #ecf0f1;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid #f3f4f6;
+    color: #4b5563;
+    font-size: 0.95rem;
+  }
+
+  tbody tr {
+    transition: background 0.2s;
   }
 
   tbody tr:hover {
-    background: #f8f9fa;
+    background: #f9fafb;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
   }
 
   .no-events {
     text-align: center;
-    padding: 3rem;
+    padding: 4rem 2rem;
     background: white;
-    border-radius: 8px;
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
+  }
+
+  .no-events h3 {
+    color: #6b7280;
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+  }
+
+  @media (max-width: 768px) {
+    .events-table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      min-width: 700px;
+    }
   }
 </style>
 
-<div class="dashboard-header">
-  <h1>📊 Host Dashboard</h1>
-  <p>Manage your events and track registrations</p>
-</div>
-
-<% const totalEvents = events.length; const totalRegistrations =
-events.reduce((sum, e) => sum + parseInt(e.registrations), 0); const
-avgRegistrations = totalEvents > 0 ? (totalRegistrations /
-totalEvents).toFixed(1) : 0; %>
-
-<div class="stats-grid">
-  <div class="stat-card">
-    <div class="stat-label">Total Events</div>
-    <div class="stat-number"><%= totalEvents %></div>
+<div class="host-shell">
+  <div class="dashboard-header">
+    <h1>Зохион байгуулагчийн самбар</h1>
+    <p>Арга хэмжээнүүдээ удирдаж, бүртгэлийн статистикийг харах</p>
   </div>
-  <div class="stat-card">
-    <div class="stat-label">Total Registrations</div>
-    <div class="stat-number"><%= totalRegistrations %></div>
+
+  <% const totalEvents = events.length; const totalRegistrations =
+  events.reduce((sum, e) => sum + parseInt(e.registrations), 0); const
+  avgRegistrations = totalEvents > 0 ? (totalRegistrations /
+  totalEvents).toFixed(1) : 0; %>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Нийт арга хэмжээ</div>
+      <div class="stat-number"><%= totalEvents %></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Нийт бүртгэл</div>
+      <div class="stat-number"><%= totalRegistrations %></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Дундаж бүртгэл</div>
+      <div class="stat-number"><%= avgRegistrations %></div>
+    </div>
   </div>
-  <div class="stat-card">
-    <div class="stat-label">Avg Registrations/Event</div>
-    <div class="stat-number"><%= avgRegistrations %></div>
+
+  <h2 class="section-title">Таны арга хэмжээнүүд</h2>
+
+  <% if (events.length === 0) { %>
+  <div class="no-events">
+    <h3>Та одоогоор арга хэмжээ үүсгээгүй байна</h3>
+    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem">Эхний арга хэмжээгээ үүсгэх</a>
   </div>
+  <% } else { %>
+  <div class="events-table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Арга хэмжээний гарчиг</th>
+          <th>Огноо ба цаг</th>
+          <th>Байршил</th>
+          <th>Бүртгэл</th>
+          <th>Үйлдлүүд</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% events.forEach(event => { %>
+        <tr>
+          <td><strong style="color: #111827;"><%= event.title %></strong></td>
+          <td><%= new Date(event.start_datetime).toLocaleString() %></td>
+          <td><%= event.location %></td>
+          <td>
+            <span class="badge badge-info"><%= event.registrations %></span>
+          </td>
+          <td>
+            <a href="/host/events/<%= event.id %>/participants" class="btn btn-success">Оролцогчдыг үзэх</a>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
 </div>
 
-<h2 style="margin-bottom: 1rem">Your Events</h2>
-
-<% if (events.length === 0) { %>
-<div class="no-events">
-  <h3>You haven't created any events yet</h3>
-  <a href="/events/new" class="btn btn-success" style="margin-top: 1rem"
-    >Create Your First Event</a
-  >
-</div>
-<% } else { %>
-<div class="events-table">
-  <table>
-    <thead>
-      <tr>
-        <th>Event Title</th>
-        <th>Date & Time</th>
-        <th>Location</th>
-        <th>Registrations</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% events.forEach(event => { %>
-      <tr>
-        <td><strong><%= event.title %></strong></td>
-        <td>📅 <%= new Date(event.start_datetime).toLocaleString() %></td>
-        <td>📍 <%= event.location %></td>
-        <td>
-          <span class="badge badge-info" style="font-size: 1rem">
-            👥 <%= event.registrations %>
-          </span>
-        </td>
-        <td>
-          <a
-            href="/host/events/<%= event.id %>/participants"
-            class="btn btn-success"
-            >View Participants</a
-          >
-        </td>
-      </tr>
-      <% }); %>
-    </tbody>
-  </table>
-</div>
-<% } %> <%- include('../partials/footer-layout') %>
+<%- include('../partials/footer-layout') %>

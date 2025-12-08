@@ -3,19 +3,28 @@
 <style>
   .event-detail {
     max-width: 900px;
-    margin: 0 auto;
+    margin: 2.5rem auto 3rem;
+    padding: 0 1.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
   }
 
   .event-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 3rem 2rem;
-    border-radius: 8px;
+    background: #ffffff;
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e5e7eb;
     margin-bottom: 2rem;
   }
 
   .event-hero h1 {
-    font-size: 2.5rem;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #111827;
     margin-bottom: 1rem;
   }
 
@@ -23,21 +32,25 @@
     display: flex;
     gap: 1rem;
     margin-top: 1rem;
+    flex-wrap: wrap;
   }
 
   .detail-section {
     background: white;
     padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
     margin-bottom: 1.5rem;
   }
 
   .detail-section h2 {
-    color: #2c3e50;
+    color: #111827;
     margin-bottom: 1.5rem;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.5rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e5e7eb;
   }
 
   .detail-grid {
@@ -54,47 +67,51 @@
   }
 
   .detail-item strong {
-    color: #7f8c8d;
-    font-size: 0.9rem;
+    color: #6b7280;
+    font-size: 0.85rem;
     text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
   }
 
   .detail-item span {
-    color: #2c3e50;
-    font-size: 1.1rem;
+    color: #111827;
+    font-size: 1.05rem;
+  }
+
+  .detail-item p {
+    color: #374151;
+    line-height: 1.7;
+    font-size: 0.95rem;
   }
 
   .action-buttons {
     display: flex;
     gap: 1rem;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
   }
 
   .registration-status {
-    background: #d4edda;
-    color: #155724;
-    padding: 1rem;
-    border-radius: 4px;
+    background: #dcfce7;
+    color: #166534;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
     margin-bottom: 1rem;
     text-align: center;
-    font-weight: 500;
+    font-weight: 600;
+    border: 1px solid #bbf7d0;
   }
 </style>
 
 <div class="event-detail">
-  <a href="/events" class="btn btn-secondary" style="margin-bottom: 1rem"
-    >← Арга хэмжээнүүд рүү буцах</a
-  >
+  <a href="/events" class="btn btn-secondary back-link">← Арга хэмжээнүүд рүү буцах</a>
 
   <div class="event-hero">
     <h1><%= event.title %></h1>
     <div class="event-badges">
-      <span class="badge badge-warning" style="font-size: 1rem"
-        ><%= event.category %></span
-      >
-      <span class="badge badge-info" style="font-size: 1rem"
-        >👥 <%= event.attendee_count %> бүртгүүлсэн</span
-      >
+      <span class="badge badge-warning"><%= event.category %></span>
+      <span class="badge badge-info"><%= event.attendee_count %> бүртгүүлсэн</span>
     </div>
   </div>
 
@@ -103,43 +120,43 @@
 
     <div class="detail-grid">
       <div class="detail-item">
-        <strong>📅 Эхлэх огноо ба цаг</strong>
+        <strong>Эхлэх огноо ба цаг</strong>
         <span><%= new Date(event.start_datetime).toLocaleString() %></span>
       </div>
 
       <% if (event.end_datetime) { %>
       <div class="detail-item">
-        <strong>🏁 Дуусах огноо ба цаг</strong>
+        <strong>Дуусах огноо ба цаг</strong>
         <span><%= new Date(event.end_datetime).toLocaleString() %></span>
       </div>
       <% } %>
 
       <div class="detail-item">
-        <strong>📍 Байршил</strong>
+        <strong>Байршил</strong>
         <span><%= event.location %></span>
       </div>
 
       <div class="detail-item">
-        <strong>👤 Зохион байгуулагч</strong>
+        <strong>Зохион байгуулагч</strong>
         <span><%= event.host_name %></span>
       </div>
 
       <% if (event.max_attendees) { %>
       <div class="detail-item">
-        <strong>👥 Хамгийн их оролцогч</strong>
+        <strong>Хамгийн их оролцогч</strong>
         <span><%= event.max_attendees %></span>
       </div>
       <% } %>
 
       <div class="detail-item">
-        <strong>📊 Одоогийн бүртгэл</strong>
+        <strong>Одоогийн бүртгэл</strong>
         <span><%= event.attendee_count %></span>
       </div>
     </div>
 
     <% if (event.description) { %>
     <div class="detail-item">
-      <strong>📝 Тайлбар</strong>
+      <strong>Тайлбар</strong>
       <p style="margin-top: 0.5rem; line-height: 1.6">
         <%= event.description %>
       </p>
@@ -150,23 +167,28 @@
   <div class="detail-section">
     <h2>Бүртгэл</h2>
 
-    <% if (user) { %> <% if (isRegistered) { %>
-    <div class="registration-status">✅ Та энэ арга хэмжээнд бүртгүүлсэн байна!</div>
-    <form method="POST" action="/events/<%= event.id %>/unregister">
-      <button type="submit" class="btn btn-danger">Бүртгэл цуцлах</button>
-    </form>
-    <% } else { %> <% if (event.max_attendees && event.attendee_count >=
-    event.max_attendees) { %>
-    <div class="alert alert-error">⚠️ Энэ арга хэмжээ дүүрсэн байна.</div>
+    <% if (user) { %> 
+      <% if (isRegistered) { %>
+        <div class="registration-status">
+          Та энэ арга хэмжээнд бүртгүүлсэн байна!
+        </div>
+        <form method="POST" action="/events/<%= event.id %>/unregister">
+          <button type="submit" class="btn btn-danger">Бүртгэл цуцлах</button>
+        </form>
+      <% } else { %> 
+        <% if (event.max_attendees && event.attendee_count >= event.max_attendees) { %>
+          <div class="alert alert-error">Энэ арга хэмжээ дүүрсэн байна.</div>
+        <% } else { %>
+          <p style="margin-bottom: 1rem; color: #4b5563;">Энэ арга хэмжээ сонирхож байна уу? Одоо бүртгүүлээрэй!</p>
+          <form method="POST" action="/events/<%= event.id %>/register">
+            <button type="submit" class="btn btn-success">Бүртгүүлэх</button>
+          </form>
+        <% } %> 
+      <% } %> 
     <% } else { %>
-    <p>Энэ арга хэмжээ сонирхож байна уу? Одоо бүртгүүлээрэй!</p>
-    <form method="POST" action="/events/<%= event.id %>/register">
-      <button type="submit" class="btn btn-success">Бүртгүүлэх</button>
-    </form>
-    <% } %> <% } %> <% } else { %>
-    <div class="alert alert-error">
-      Бүртгүүлэхийн тулд <a href="/login">нэвтэрнэ</a> үү.
-    </div>
+      <div class="alert alert-error">
+        Бүртгүүлэхийн тулд <a href="/login" style="color: #991b1b; text-decoration: underline; font-weight: 600;">нэвтэрнэ</a> үү.
+      </div>
     <% } %>
   </div>
 
@@ -175,14 +197,8 @@
     <h2>Зохион байгуулагчийн үйлдлүүд</h2>
     <div class="action-buttons">
       <a href="/events/<%= event.id %>/edit" class="btn">Арга хэмжээ засах</a>
-      <a href="/host/events/<%= event.id %>/participants" class="btn"
-        >Оролцогчдыг үзэх</a
-      >
-      <form
-        method="POST"
-        action="/events/<%= event.id %>/delete"
-        style="display: inline"
-      >
+      <a href="/host/events/<%= event.id %>/participants" class="btn">Оролцогчдыг үзэх</a>
+      <form method="POST" action="/events/<%= event.id %>/delete" style="display: inline">
         <button
           type="submit"
           class="btn btn-danger"

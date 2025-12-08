@@ -1,29 +1,75 @@
 <header>
   <nav>
-    <h1><a href="/">🎉 Арга Хэмжээний Портал</a></h1>
-    <ul>
-      <li><a href="/events">Арга хэмжээнүүд</a></li>
+    <h1><a href="/">GMIT</a></h1>
+    <ul class="nav-links">
       <% if (user) { %>
-      <li><a href="/dashboard">Хяналтын самбар</a></li>
-      <li><a href="/events/new">Арга хэмжээ үүсгэх</a></li>
-      <li><a href="/events/my/list">Миний арга хэмжээнүүд</a></li>
-      <li><a href="/host/dashboard">Зохион байгуулагчийн самбар</a></li>
-      <% if (user.role === 'admin') { %>
-      <li><a href="/admin/events">Админ</a></li>
-      <% } %> <% } %>
-    </ul>
-    <div class="user-info">
-      <% if (user) { %>
-      <span>Сайн байна уу, <strong><%= user.name %></strong> (<%= user.role %>)</span>
-      <a href="/logout" class="btn btn-secondary" style="padding: 0.4rem 1rem"
-        >Гарах</a
-      >
-      <% } else { %>
-      <a href="/login" class="btn" style="padding: 0.4rem 1rem">Нэвтрэх</a>
-      <a href="/register" class="btn btn-success" style="padding: 0.4rem 1rem"
-        >Бүртгүүлэх</a
-      >
+      <li><a href="/events/new" class="btn-create">+ Үүсгэх</a></li>
       <% } %>
-    </div>
+      <div class="user-info">
+        <% if (user) { %>
+        <div class="user-dropdown">
+          <button class="user-menu-btn" onclick="toggleUserMenu(event)">
+            <span class="user-name"><%= user.name %></span>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              style="margin-left: 0.5rem"
+            >
+              <path
+                d="M4 6L8 10L12 6"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
+          <div class="user-menu" id="userMenu">
+            <div class="user-menu-header">
+              <div class="user-menu-name"><%= user.name %></div>
+              <div class="user-menu-role"><%= user.role %></div>
+            </div>
+            <a href="/dashboard" class="user-menu-item">Хяналтын самбар</a>
+            <a href="/events/my/list" class="user-menu-item"
+              >Миний арга хэмжээнүүд</a
+            >
+            <a href="/host/dashboard" class="user-menu-item"
+              >Зохион байгуулагчийн самбар</a
+            >
+            <% if (user.role === 'admin') { %>
+            <div class="user-menu-divider"></div>
+            <a href="/admin/events" class="user-menu-item user-menu-admin"
+              >Админ самбар</a
+            >
+            <% } %>
+            <div class="user-menu-divider"></div>
+            <a href="/logout" class="user-menu-item user-menu-logout">Гарах</a>
+          </div>
+        </div>
+        <% } else { %>
+        <a href="/login" class="btn" style="padding: 0.4rem 1rem">Нэвтрэх</a>
+        <a href="/register" class="btn btn-success" style="padding: 0.4rem 1rem"
+          >Бүртгүүлэх</a
+        >
+        <% } %>
+      </div>
+    </ul>
   </nav>
 </header>
+
+<script>
+  function toggleUserMenu(event) {
+    event.stopPropagation();
+    const menu = document.getElementById("userMenu");
+    menu.classList.toggle("active");
+  }
+
+  // Close menu when clicking outside
+  document.addEventListener("click", function (event) {
+    const menu = document.getElementById("userMenu");
+    if (menu && menu.classList.contains("active")) {
+      menu.classList.remove("active");
+    }
+  });
+</script>

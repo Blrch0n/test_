@@ -1,97 +1,141 @@
 <%- include('partials/header-layout') %>
 
 <style>
+  .dashboard-shell {
+    max-width: 1120px;
+    margin: 2.5rem auto 3rem;
+    padding: 0 1.5rem;
+  }
+
   .dashboard-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: #ffffff;
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+    border: 1px solid #e5e7eb;
     margin-bottom: 2rem;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 0.5rem;
+  }
+
+  .dashboard-header p {
+    color: #6b7280;
+    font-size: 0.95rem;
+  }
+
+  .dashboard-header p strong {
+    color: #111827;
+    font-weight: 600;
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.25rem;
   }
 
   .quick-actions {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
+    gap: 1.25rem;
   }
 
   .action-card {
     background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
+    padding: 1.75rem;
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s;
   }
 
   .action-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
   }
 
   .action-card h3 {
-    color: #2c3e50;
-    margin-bottom: 1rem;
+    color: #111827;
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    font-weight: 600;
   }
 
-  .action-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+  .action-card p {
+    color: #6b7280;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+
+  .action-label {
+    display: inline-block;
+    background: #f3f4f6;
+    color: #374151;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 </style>
 
-<div class="dashboard-header">
-  <h1>Сайн байна уу, <%= user.name %>!</h1>
-  <p>
-    Эрх: <strong><%= user.role.toUpperCase() %></strong> | Имэйл: <%=
-    user.email %>
-  </p>
-</div>
-
-<h2>Шуурхай үйлдлүүд</h2>
-
-<div class="quick-actions">
-  <div class="action-card">
-    <div class="action-icon">🔍</div>
-    <h3>Арга хэмжээ үзэх</h3>
-    <p>Сургуульд болох шинэ арга хэмжээнүүдийг олоорой</p>
-    <a href="/events" class="btn" style="margin-top: 1rem">Үзэх</a>
+<div class="dashboard-shell">
+  <div class="dashboard-header">
+    <h1>Сайн байна уу, <%= user.name %>!</h1>
+    <p>
+      Эрх: <strong><%= user.role.toUpperCase() %></strong> | Имэйл: <%= user.email %>
+    </p>
   </div>
 
-  <div class="action-card">
-    <div class="action-icon">✨</div>
-    <h3>Арга хэмжээ үүсгэх</h3>
-    <p>Шинэ арга хэмжээ зохион байгуулж оролцогчид урих</p>
-    <a href="/events/new" class="btn btn-success" style="margin-top: 1rem"
-      >Үүсгэх</a
-    >
-  </div>
+  <h2 class="section-title">Шуурхай үйлдлүүд</h2>
 
-  <div class="action-card">
-    <div class="action-icon">📋</div>
-    <h3>Миний арга хэмжээнүүд</h3>
-    <p>Өөрийн үүсгэсэн арга хэмжээнүүдээ удирдах</p>
-    <a href="/events/my/list" class="btn" style="margin-top: 1rem">Үзэх</a>
-  </div>
+  <div class="quick-actions">
+    <div class="action-card">
+      <span class="action-label">Хайлт</span>
+      <h3>Арга хэмжээ үзэх</h3>
+      <p>Сургуульд болох шинэ арга хэмжээнүүдийг олоорой</p>
+      <a href="/events" class="btn">Үзэх</a>
+    </div>
 
-  <div class="action-card">
-    <div class="action-icon">📊</div>
-    <h3>Зохион байгуулагчийн самбар</h3>
-    <p>Арга хэмжээний статистик болон оролцогчдыг харах</p>
-    <a href="/host/dashboard" class="btn" style="margin-top: 1rem">Самбар</a>
-  </div>
+    <div class="action-card">
+      <span class="action-label">Үүсгэх</span>
+      <h3>Арга хэмжээ үүсгэх</h3>
+      <p>Шинэ арга хэмжээ зохион байгуулж оролцогчид урих</p>
+      <a href="/events/new" class="btn btn-success">Үүсгэх</a>
+    </div>
 
-  <% if (user.role === 'admin') { %>
-  <div class="action-card">
-    <div class="action-icon">🛡️</div>
-    <h3>Админ самбар</h3>
-    <p>Бүх арга хэмжээ болон хэрэглэгчдийг удирдах</p>
-    <a href="/admin/events" class="btn btn-danger" style="margin-top: 1rem"
-      >Админ</a
-    >
+    <div class="action-card">
+      <span class="action-label">Удирдлага</span>
+      <h3>Миний арга хэмжээнүүд</h3>
+      <p>Өөрийн үүсгэсэн арга хэмжээнүүдээ удирдах</p>
+      <a href="/events/my/list" class="btn">Үзэх</a>
+    </div>
+
+    <div class="action-card">
+      <span class="action-label">Статистик</span>
+      <h3>Зохион байгуулагчийн самбар</h3>
+      <p>Арга хэмжээний статистик болон оролцогчдыг харах</p>
+      <a href="/host/dashboard" class="btn">Самбар</a>
+    </div>
+
+    <% if (user.role === 'admin') { %>
+    <div class="action-card">
+      <span class="action-label">Админ</span>
+      <h3>Админ самбар</h3>
+      <p>Бүх арга хэмжээ болон хэрэглэгчдийг удирдах</p>
+      <a href="/admin/events" class="btn btn-danger">Админ</a>
+    </div>
+    <% } %>
   </div>
-  <% } %>
 </div>
 
 <%- include('partials/footer-layout') %>

@@ -6,15 +6,12 @@ const db = require("./db");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// View engine setup
 app.set("view engine", "ejs");
 
-// Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 
-// Session configuration
 app.use(
   session({
     secret: "event-portal-secret-key-change-in-production",
@@ -26,15 +23,10 @@ app.use(
   })
 );
 
-// Make user available to all views
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null;
   next();
 });
-
-// ============================================
-// MIDDLEWARE
-// ============================================
 
 function isAuthenticated(req, res, next) {
   if (req.session.user) return next();
@@ -56,20 +48,12 @@ function isAdmin(req, res, next) {
   res.status(403).send("Admin only");
 }
 
-// ============================================
-// ROUTES - HOME
-// ============================================
-
 app.get("/", (req, res) => {
   res.render("index", {
     title: "Event Portal - Welcome",
     message: "Welcome to the Event Portal",
   });
 });
-
-// ============================================
-// ROUTES - DATABASE TEST
-// ============================================
 
 app.get("/db-test", async (req, res) => {
   try {
@@ -83,20 +67,13 @@ app.get("/db-test", async (req, res) => {
   }
 });
 
-// ============================================
-// ROUTES - AUTHENTICATION
-// ============================================
-
-// Register - Show form
 app.get("/register", (req, res) => {
   res.render("register", { error: null, title: "Register" });
 });
 
-// Register - Handle submission
 app.post("/register", async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
-    // Check if user already exists
     const [existing] = await db.query("SELECT * FROM users WHERE email = ?", [
       email,
     ]);
@@ -107,10 +84,8 @@ app.post("/register", async (req, res) => {
       });
     }
 
-    // Hash password
     const hashed = await bcrypt.hash(password, 10);
 
-    // Insert new user
     await db.query(
       "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
       [name, email, hashed, role || "student"]
@@ -123,12 +98,10 @@ app.post("/register", async (req, res) => {
   }
 });
 
-// Login - Show form
 app.get("/login", (req, res) => {
   res.render("login", { error: null, title: "Login" });
 });
 
-// Login - Handle submission
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -151,7 +124,6 @@ app.post("/login", async (req, res) => {
       });
     }
 
-    // Set session
     req.session.user = {
       id: user.id,
       name: user.name,
@@ -181,11 +153,6 @@ app.get("/dashboard", isAuthenticated, (req, res) => {
   });
 });
 
-// ============================================
-// ROUTES - EVENTS (PUBLIC)
-// ============================================
-
-// Browse all events with filtering
 app.get("/events", async (req, res) => {
   const { date, category, host } = req.query;
 
@@ -224,91 +191,10 @@ app.get("/events", async (req, res) => {
   }
 });
 
-// Event detail page
-app.get("/events/:id", async (req, res) => {
-  const eventId = req.params.id;
-
-  try {
-    const [events] = await db.query(
-      `
-      SELECT e.*, u.name AS host_name,
-        (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.id) AS attendee_count
-      FROM events e
-      JOIN users u ON e.host_id = u.id
-      WHERE e.id = ?
-    `,
-      [eventId]
-    );
-
-    if (!events.length) {
-      return res.status(404).send("Event not found");
-    }
-
-    const event = events[0];
-
-    // Check if current user is registered
-    let isRegistered = false;
-    if (req.session.user) {
-      const [reg] = await db.query(
-        "SELECT * FROM registrations WHERE user_id = ? AND event_id = ?",
-        [req.session.user.id, eventId]
-      );
-      isRegistered = reg.length > 0;
-    }
-
-    res.render("events/detail", {
-      event,
-      isRegistered,
-      title: event.title,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error loading event");
-  }
+app.get("/events/new", isAuthenticated, (req, res) => {
+  res.render("events/new", { title: "Create Event" });
 });
 
-// Register for event
-app.post("/events/:id/register", isAuthenticated, async (req, res) => {
-  const eventId = req.params.id;
-  const userId = req.session.user.id;
-
-  try {
-    await db.query(
-      "INSERT INTO registrations (user_id, event_id) VALUES (?, ?)",
-      [userId, eventId]
-    );
-    res.redirect("/events/" + eventId);
-  } catch (err) {
-    if (err.code === "ER_DUP_ENTRY") {
-      return res.redirect("/events/" + eventId); // already registered
-    }
-    console.error(err);
-    res.status(500).send("Registration error");
-  }
-});
-
-// Unregister from event
-app.post("/events/:id/unregister", isAuthenticated, async (req, res) => {
-  const eventId = req.params.id;
-  const userId = req.session.user.id;
-
-  try {
-    await db.query(
-      "DELETE FROM registrations WHERE user_id = ? AND event_id = ?",
-      [userId, eventId]
-    );
-    res.redirect("/events/" + eventId);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Unregistration error");
-  }
-});
-
-// ============================================
-// ROUTES - HOST EVENT MANAGEMENT
-// ============================================
-
-// List host's own events
 app.get("/events/my/list", isAuthenticated, async (req, res) => {
   const userId = req.session.user.id;
 
@@ -334,12 +220,82 @@ app.get("/events/my/list", isAuthenticated, async (req, res) => {
   }
 });
 
-// Show create event form
-app.get("/events/new", isAuthenticated, (req, res) => {
-  res.render("events/new", { title: "Create Event" });
+app.get("/events/:id", async (req, res) => {
+  const eventId = req.params.id;
+
+  try {
+    const [events] = await db.query(
+      `
+      SELECT e.*, u.name AS host_name,
+        (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.id) AS attendee_count
+      FROM events e
+      JOIN users u ON e.host_id = u.id
+      WHERE e.id = ?
+    `,
+      [eventId]
+    );
+
+    if (!events.length) {
+      return res.status(404).send("Event not found");
+    }
+
+    const event = events[0];
+
+    let isRegistered = false;
+    if (req.session.user) {
+      const [reg] = await db.query(
+        "SELECT * FROM registrations WHERE user_id = ? AND event_id = ?",
+        [req.session.user.id, eventId]
+      );
+      isRegistered = reg.length > 0;
+    }
+
+    res.render("events/detail", {
+      event,
+      isRegistered,
+      title: event.title,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error loading event");
+  }
 });
 
-// Create new event
+app.post("/events/:id/register", isAuthenticated, async (req, res) => {
+  const eventId = req.params.id;
+  const userId = req.session.user.id;
+
+  try {
+    await db.query(
+      "INSERT INTO registrations (user_id, event_id) VALUES (?, ?)",
+      [userId, eventId]
+    );
+    res.redirect("/events/" + eventId);
+  } catch (err) {
+    if (err.code === "ER_DUP_ENTRY") {
+      return res.redirect("/events/" + eventId);
+    }
+    console.error(err);
+    res.status(500).send("Registration error");
+  }
+});
+
+app.post("/events/:id/unregister", isAuthenticated, async (req, res) => {
+  const eventId = req.params.id;
+  const userId = req.session.user.id;
+
+  try {
+    await db.query(
+      "DELETE FROM registrations WHERE user_id = ? AND event_id = ?",
+      [userId, eventId]
+    );
+    res.redirect("/events/" + eventId);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Unregistration error");
+  }
+});
+
 app.post("/events", isAuthenticated, async (req, res) => {
   const {
     title,
@@ -373,7 +329,6 @@ app.post("/events", isAuthenticated, async (req, res) => {
   }
 });
 
-// Show edit event form
 app.get("/events/:id/edit", isAuthenticated, async (req, res) => {
   const eventId = req.params.id;
 
@@ -397,7 +352,6 @@ app.get("/events/:id/edit", isAuthenticated, async (req, res) => {
   }
 });
 
-// Update event
 app.post("/events/:id/edit", isAuthenticated, async (req, res) => {
   const eventId = req.params.id;
   const {
@@ -435,15 +389,12 @@ app.post("/events/:id/edit", isAuthenticated, async (req, res) => {
   }
 });
 
-// Delete event
 app.post("/events/:id/delete", isAuthenticated, async (req, res) => {
   const eventId = req.params.id;
 
   try {
-    // Delete registrations first (foreign key constraint)
     await db.query("DELETE FROM registrations WHERE event_id = ?", [eventId]);
 
-    // Delete event
     await db.query("DELETE FROM events WHERE id = ? AND host_id = ?", [
       eventId,
       req.session.user.id,
@@ -455,10 +406,6 @@ app.post("/events/:id/delete", isAuthenticated, async (req, res) => {
     res.status(500).send("Error deleting event");
   }
 });
-
-// ============================================
-// ROUTES - HOST DASHBOARD
-// ============================================
 
 app.get("/host/dashboard", isAuthenticated, async (req, res) => {
   const userId = req.session.user.id;
@@ -487,12 +434,10 @@ app.get("/host/dashboard", isAuthenticated, async (req, res) => {
   }
 });
 
-// View participants for an event
 app.get("/host/events/:id/participants", isAuthenticated, async (req, res) => {
   const eventId = req.params.id;
 
   try {
-    // Verify ownership
     const [events] = await db.query(
       "SELECT * FROM events WHERE id = ? AND host_id = ?",
       [eventId, req.session.user.id]
@@ -504,7 +449,6 @@ app.get("/host/events/:id/participants", isAuthenticated, async (req, res) => {
 
     const event = events[0];
 
-    // Get participants
     const [participants] = await db.query(
       `
       SELECT u.name, u.email, r.registered_at
@@ -526,10 +470,6 @@ app.get("/host/events/:id/participants", isAuthenticated, async (req, res) => {
     res.status(500).send("Error loading participants");
   }
 });
-
-// ============================================
-// ROUTES - ADMIN
-// ============================================
 
 app.get("/admin/events", isAdmin, async (req, res) => {
   try {
@@ -555,10 +495,8 @@ app.post("/admin/events/:id/delete", isAdmin, async (req, res) => {
   const eventId = req.params.id;
 
   try {
-    // Delete registrations first
     await db.query("DELETE FROM registrations WHERE event_id = ?", [eventId]);
 
-    // Delete event
     await db.query("DELETE FROM events WHERE id = ?", [eventId]);
 
     res.redirect("/admin/events");
@@ -567,10 +505,6 @@ app.post("/admin/events/:id/delete", isAdmin, async (req, res) => {
     res.status(500).send("Error deleting event");
   }
 });
-
-// ============================================
-// START SERVER
-// ============================================
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

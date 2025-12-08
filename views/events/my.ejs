@@ -1,17 +1,32 @@
 <%- include('../partials/header-layout') %>
 
 <style>
+  .my-events-shell {
+    max-width: 1200px;
+    margin: 2.5rem auto 3rem;
+    padding: 0 1.5rem;
+  }
+
   .page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 
-  .events-table {
+  .page-header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .events-table-container {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
     overflow: hidden;
   }
 
@@ -21,112 +36,145 @@
   }
 
   thead {
-    background: #2c3e50;
-    color: white;
+    background: #f9fafb;
+    border-bottom: 2px solid #e5e7eb;
   }
 
   th {
-    padding: 1rem;
+    padding: 1rem 1.25rem;
     text-align: left;
-    font-weight: 500;
+    font-weight: 600;
+    color: #374151;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   td {
-    padding: 1rem;
-    border-bottom: 1px solid #ecf0f1;
+    padding: 1.1rem 1.25rem;
+    border-bottom: 1px solid #f3f4f6;
+    color: #4b5563;
+    font-size: 0.95rem;
+  }
+
+  tbody tr {
+    transition: background 0.2s;
   }
 
   tbody tr:hover {
-    background: #f8f9fa;
+    background: #f9fafb;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
   }
 
   .event-actions {
     display: flex;
     gap: 0.5rem;
+    flex-wrap: wrap;
   }
 
   .event-actions .btn {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
   }
 
   .no-events {
     text-align: center;
-    padding: 3rem;
+    padding: 4rem 2rem;
     background: white;
-    border-radius: 8px;
+    border-radius: 18px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+    border: 1px solid #e5e7eb;
   }
 
   .no-events h3 {
-    color: #7f8c8d;
+    color: #6b7280;
     margin-bottom: 1rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+  }
+
+  .no-events p {
+    color: #9ca3af;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 768px) {
+    .events-table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      min-width: 800px;
+    }
   }
 </style>
 
-<div class="page-header">
-  <h1>My Events</h1>
-  <a href="/events/new" class="btn btn-success">+ Create New Event</a>
+<div class="my-events-shell">
+  <div class="page-header">
+    <h1>Миний арга хэмжээнүүд</h1>
+    <a href="/events/new" class="btn btn-success">+ Шинэ арга хэмжээ үүсгэх</a>
+  </div>
+
+  <% if (events.length === 0) { %>
+  <div class="no-events">
+    <h3>Та одоогоор арга хэмжээ үүсгээгүй байна</h3>
+    <p>Эхний арга хэмжээгээ үүсгэж эхлээрэй!</p>
+    <a href="/events/new" class="btn btn-success">Арга хэмжээ үүсгэх</a>
+  </div>
+  <% } else { %>
+  <div class="events-table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Гарчиг</th>
+          <th>Төрөл</th>
+          <th>Огноо ба цаг</th>
+          <th>Байршил</th>
+          <th>Бүртгэл</th>
+          <th>Үйлдлүүд</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% events.forEach(event => { %>
+        <tr>
+          <td><strong style="color: #111827;"><%= event.title %></strong></td>
+          <td><span class="badge badge-warning"><%= event.category %></span></td>
+          <td><%= new Date(event.start_datetime).toLocaleString() %></td>
+          <td><%= event.location %></td>
+          <td>
+            <span class="badge badge-info"><%= event.attendee_count %></span>
+            <% if (event.max_attendees) { %> / <%= event.max_attendees %> <% } %>
+          </td>
+          <td>
+            <div class="event-actions">
+              <a href="/events/<%= event.id %>" class="btn">Үзэх</a>
+              <a href="/events/<%= event.id %>/edit" class="btn">Засах</a>
+              <a href="/host/events/<%= event.id %>/participants" class="btn btn-success">Оролцогчид</a>
+              <form
+                method="POST"
+                action="/events/<%= event.id %>/delete"
+                style="display: inline"
+              >
+                <button
+                  type="submit"
+                  class="btn btn-danger"
+                  onclick="return confirm('Та энэ арга хэмжээг устгахдаа итгэлтэй байна уу?')"
+                >
+                  Устгах
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <% } %>
 </div>
 
-<% if (events.length === 0) { %>
-<div class="no-events">
-  <h3>You haven't created any events yet</h3>
-  <p>Create your first event to get started!</p>
-  <a href="/events/new" class="btn btn-success" style="margin-top: 1rem"
-    >Create Event</a
-  >
-</div>
-<% } else { %>
-<div class="events-table">
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Date & Time</th>
-        <th>Location</th>
-        <th>Registrations</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% events.forEach(event => { %>
-      <tr>
-        <td><strong><%= event.title %></strong></td>
-        <td><span class="badge badge-warning"><%= event.category %></span></td>
-        <td><%= new Date(event.start_datetime).toLocaleString() %></td>
-        <td>📍 <%= event.location %></td>
-        <td>
-          <span class="badge badge-info">👥 <%= event.attendee_count %></span>
-          <% if (event.max_attendees) { %> / <%= event.max_attendees %> <% } %>
-        </td>
-        <td>
-          <div class="event-actions">
-            <a href="/events/<%= event.id %>" class="btn">View</a>
-            <a href="/events/<%= event.id %>/edit" class="btn">Edit</a>
-            <a
-              href="/host/events/<%= event.id %>/participants"
-              class="btn btn-success"
-              >Participants</a
-            >
-            <form
-              method="POST"
-              action="/events/<%= event.id %>/delete"
-              style="display: inline"
-            >
-              <button
-                type="submit"
-                class="btn btn-danger"
-                onclick="return confirm('Delete this event?')"
-              >
-                Delete
-              </button>
-            </form>
-          </div>
-        </td>
-      </tr>
-      <% }); %>
-    </tbody>
-  </table>
-</div>
-<% } %> <%- include('../partials/footer-layout') %>
+<%- include('../partials/footer-layout') %>
