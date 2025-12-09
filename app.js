@@ -9,6 +9,8 @@ const db = require("./db");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.set("trust proxy", 1);
+
 const viewsPath = path.join(__dirname, "views");
 app.set("views", viewsPath);
 app.set("view engine", "ejs");
@@ -22,13 +24,16 @@ app.use(
     secret:
       process.env.SESSION_SECRET ||
       "event-portal-secret-key-change-in-production",
-    resave: false,
-    saveUninitialized: false,
+    resave: true, // Changed for serverless compatibility
+    saveUninitialized: true, // Changed for serverless compatibility
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
-      secure: process.env.NODE_ENV === "production",
+      secure: false, // Temporarily disabled for debugging
       httpOnly: true,
+      sameSite: "lax",
     },
+    proxy: true,
+    name: "sessionId",
   })
 );
 
@@ -113,10 +118,18 @@ app.get("/login", (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
+  console.log("Login attempt for:", email);
+
   try {
     const [rows] = await db.query("SELECT * FROM users WHERE email = ?", [
       email,
     ]);
+
+    console.log(
+      "User query result:",
+      rows.length > 0 ? "User found" : "No user found"
+    );
+
     if (!rows.length) {
       return res.render("login", {
         error: "No user with that email",
@@ -126,6 +139,9 @@ app.post("/login", async (req, res) => {
 
     const user = rows[0];
     const valid = await bcrypt.compare(password, user.password);
+
+    console.log("Password validation:", valid ? "Success" : "Failed");
+
     if (!valid) {
       return res.render("login", {
         error: "Incorrect password",
@@ -140,9 +156,18 @@ app.post("/login", async (req, res) => {
       role: user.role,
     };
 
-    res.redirect("/dashboard");
+    console.log("Session created for user:", user.email);
+
+    req.session.save((err) => {
+      if (err) {
+        console.error("Session save error:", err);
+        return res.status(500).send("Session error");
+      }
+      console.log("Session saved successfully, redirecting to dashboard");
+      res.redirect("/dashboard");
+    });
   } catch (err) {
-    console.error(err);
+    console.error("Login error:", err);
     res.status(500).send("Login error");
   }
 });
