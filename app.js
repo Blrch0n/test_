@@ -24,11 +24,11 @@ app.use(
     secret:
       process.env.SESSION_SECRET ||
       "event-portal-secret-key-change-in-production",
-    resave: true, // Changed for serverless compatibility
-    saveUninitialized: true, // Changed for serverless compatibility
+    resave: true,
+    saveUninitialized: true,
     cookie: {
       maxAge: 24 * 60 * 60 * 1000,
-      secure: false, // Temporarily disabled for debugging
+      secure: false,
       httpOnly: true,
       sameSite: "lax",
     },

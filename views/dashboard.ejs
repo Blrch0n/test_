@@ -2,7 +2,7 @@
 
 <style>
   .dashboard-shell {
-    max-width: 1120px;
+    max-width: 1200px;
     margin: 2.5rem auto 3rem;
     padding: 0 1.5rem;
   }
@@ -49,6 +49,9 @@
   .action-card {
     background: white;
     padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border-radius: 18px;
     box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
     border: 1px solid #e5e7eb;
@@ -72,6 +75,9 @@
     font-size: 0.9rem;
     line-height: 1.6;
     margin-bottom: 1.25rem;
+  }
+  .action-card a {
+    text-align: center;
   }
 
   .action-label {
@@ -101,38 +107,53 @@
 
   <div class="quick-actions">
     <div class="action-card">
-      <span class="action-label">Browse</span>
-      <h3>View Events</h3>
-      <p>Discover new events happening at the university</p>
+      <div>
+        <span class="action-label">Browse</span>
+        <h3>View Events</h3>
+        <p>Discover new events happening at the university</p>
+      </div>
+
       <a href="/events" class="btn">View</a>
     </div>
 
     <div class="action-card">
-      <span class="action-label">Create</span>
-      <h3>Create Event</h3>
-      <p>Organize a new event and invite participants</p>
+      <div>
+        <span class="action-label">Create</span>
+        <h3>Create Event</h3>
+        <p>Organize a new event and invite participants</p>
+      </div>
+
       <a href="/events/new" class="btn btn-success">Create</a>
     </div>
 
     <div class="action-card">
-      <span class="action-label">Manage</span>
-      <h3>My Events</h3>
-      <p>Manage your created events</p>
+      <div>
+        <span class="action-label">Manage</span>
+        <h3>My Events</h3>
+        <p>Manage your created events</p>
+      </div>
+
       <a href="/events/my/list" class="btn">View</a>
     </div>
 
     <div class="action-card">
-      <span class="action-label">Statistics</span>
-      <h3>Host Dashboard</h3>
-      <p>View event statistics and participants</p>
+      <div>
+        <span class="action-label">Statistics</span>
+        <h3>Host Dashboard</h3>
+        <p>View event statistics and participants</p>
+      </div>
+
       <a href="/host/dashboard" class="btn">Dashboard</a>
     </div>
 
     <% if (user.role === 'admin') { %>
     <div class="action-card">
-      <span class="action-label">Admin</span>
-      <h3>Admin Dashboard</h3>
-      <p>Manage all events and users</p>
+      <div>
+        <span class="action-label">Admin</span>
+        <h3>Admin Dashboard</h3>
+        <p>Manage all events and users</p>
+      </div>
+
       <a href="/admin/events" class="btn btn-danger">Admin</a>
     </div>
     <% } %>

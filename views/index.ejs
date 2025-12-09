@@ -1,6 +1,11 @@
 <%- include('partials/header-layout') %>
 
 <style>
+  .sections {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 1.5rem;
+  }
   .hero {
     background: #ffffff;
     color: #111827;
@@ -89,45 +94,47 @@
   }
 </style>
 
-<div class="hero">
-  <h1>Welcome to the Event Management Portal</h1>
-  <p>Discover, create, and manage university events</p>
-  <% if (!user) { %>
-  <div class="hero-buttons">
-    <a href="/register" class="btn btn-success">Get Started</a>
-    <a href="/events" class="btn">Browse Events</a>
-  </div>
-  <% } else { %>
-  <div class="hero-buttons">
-    <a href="/events" class="btn btn-success">Browse Events</a>
-    <a href="/events/new" class="btn">Create Event</a>
-  </div>
-  <% } %>
-</div>
-
-<div class="features">
-  <div class="feature-card">
-    <span class="feature-label">Discovery</span>
-    <h3>Find Events</h3>
-    <p>
-      Browse university events filtered by date, category, and organizer. Find
-      events that match your interests.
-    </p>
+<div class="sections">
+  <div class="hero">
+    <h1>Welcome to the Event Management Portal</h1>
+    <p>Discover, create, and manage university events</p>
+    <% if (!user) { %>
+    <div class="hero-buttons">
+      <a href="/register" class="btn btn-success">Get Started</a>
+      <a href="/events" class="btn">Browse Events</a>
+    </div>
+    <% } else { %>
+    <div class="hero-buttons">
+      <a href="/events" class="btn btn-success">Browse Events</a>
+      <a href="/events/new" class="btn">Create Event</a>
+    </div>
+    <% } %>
   </div>
 
-  <div class="feature-card">
-    <span class="feature-label">Management</span>
-    <h3>Organize Events</h3>
-    <p>
-      Create your own events and share them with the university community.
-      Manage registrations and track attendance.
-    </p>
-  </div>
+  <div class="features">
+    <div class="feature-card">
+      <span class="feature-label">Discovery</span>
+      <h3>Find Events</h3>
+      <p>
+        Browse university events filtered by date, category, and organizer. Find
+        events that match your interests.
+      </p>
+    </div>
 
-  <div class="feature-card">
-    <span class="feature-label">Registration</span>
-    <h3>Easy Sign-Up</h3>
-    <p>Register for events with one click and receive email confirmation.</p>
+    <div class="feature-card">
+      <span class="feature-label">Management</span>
+      <h3>Organize Events</h3>
+      <p>
+        Create your own events and share them with the university community.
+        Manage registrations and track attendance.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <span class="feature-label">Registration</span>
+      <h3>Easy Sign-Up</h3>
+      <p>Register for events with one click and receive email confirmation.</p>
+    </div>
   </div>
 </div>
 
