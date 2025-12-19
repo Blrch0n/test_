@@ -1,4 +1,10 @@
-require("dotenv").config();
+// Load appropriate .env file based on NODE_ENV
+if (process.env.NODE_ENV === "test") {
+  require("dotenv").config({ path: ".env.test" });
+} else {
+  require("dotenv").config();
+}
+
 const mysql = require("mysql2/promise");
 
 const pool = mysql.createPool({
@@ -10,6 +16,11 @@ const pool = mysql.createPool({
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  connectTimeout: 30000, // 30 seconds
+  acquireTimeout: 30000,
+  timeout: 30000,
+  enableKeepAlive: true,
+  keepAliveInitialDelay: 0,
 });
 
 module.exports = pool;

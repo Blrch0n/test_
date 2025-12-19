@@ -1,4 +1,10 @@
-require("dotenv").config();
+// Load appropriate .env file based on NODE_ENV
+if (process.env.NODE_ENV === "test") {
+  require("dotenv").config({ path: ".env.test" });
+} else {
+  require("dotenv").config();
+}
+
 const path = require("path");
 const fs = require("fs");
 const express = require("express");
